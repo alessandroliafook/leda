@@ -68,7 +68,7 @@
 							<goal>compact</goal>
 						</goals>
 						<configuration>
-							<matricula>INSIRA NEU NUMERO DE MATRICULA</matricula>
+							<matricula>115111170</matricula>
 							<semestre>2016.1</semestre>
 							<turma>0X</turma>
 							<roteiro>R00</roteiro>
