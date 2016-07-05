@@ -14,7 +14,7 @@ package produto;
  * @author Adalberto
  *
  */
-public class RepositorioProdutoNaoPerecivelArray extends RepositorioProdutoArray{
+public class RepositorioProdutoNaoPerecivelArray extends RepositorioProdutoArray<ProdutoNaoPerecivel> {
 
 	public RepositorioProdutoNaoPerecivelArray(int size) {
 		super(size);

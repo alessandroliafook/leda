@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author Adalberto
  */
-public class RepositorioProdutoArrayList implements RepositorioProdutos{
+public class RepositorioProdutoArrayList<T extends Produto> implements RepositorioProdutos<T> {
 
 	/**
 	 * A estrutura onde os produtos sao mantidos. Voce nao precisa se preocupar por enquanto

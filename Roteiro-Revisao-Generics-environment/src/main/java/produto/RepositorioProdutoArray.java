@@ -14,7 +14,7 @@ package produto;
  * @author Adalberto
  *
  */
-public class RepositorioProdutoArray implements RepositorioProdutos {
+public class RepositorioProdutoArray<T extends Produto> implements RepositorioProdutos<T> {
 
 	/**
 	 * A estrutura (array) onde os produtos sao mantidos.

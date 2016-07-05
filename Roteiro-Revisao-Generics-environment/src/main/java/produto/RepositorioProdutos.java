@@ -1,6 +1,6 @@
 package produto;
 
-public interface RepositorioProdutos {
+public interface RepositorioProdutos<T extends Produto> {
 
 	/**
 	 * Recebe o codigo e diz se tem produto com  esse codigo armazenado
