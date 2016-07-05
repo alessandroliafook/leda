@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author Adalberto
  */
-public class RepositorioProdutoArrayList {
+public class RepositorioProdutoArrayList implements RepositorioProdutos{
 
 	/**
 	 * A estrutura onde os produtos sao mantidos. Voce nao precisa se preocupar por enquanto
@@ -23,10 +23,15 @@ public class RepositorioProdutoArrayList {
 	 * para indicar que nenhum produto foi ainda guardado no array.
 	 */
 	private int index = -1;
-	
+
+	/**
+	 * Constante que indice indice inexistente na estrutura.
+	 */
+	private int INDEXNULL = -1;
+
 	public RepositorioProdutoArrayList(int size) {
 		super();
-		this.produtos = new ArrayList();
+		this.produtos = new ArrayList<>(size);
 	}
 	
 	/**
@@ -39,8 +44,20 @@ public class RepositorioProdutoArrayList {
 	 * @return
 	 */
 	private int procurarIndice(int codigo){
-		//TODO Implement your code here
-		throw new UnsupportedOperationException("Not implemented yet!");
+
+		int indice = 0;
+		
+		while(indice < this.index){
+
+			Produto produto = (Produto) this.produtos.get(indice);
+			
+			if(produto.getCodigo() == codigo){
+				return indice;
+			}
+			indice++;
+		}
+		
+		return INDEXNULL;
 	}
 
 	/**
@@ -50,16 +67,21 @@ public class RepositorioProdutoArrayList {
 	 * @return
 	 */
 	public boolean existe(int codigo){
-		//TODO Implement your code here
-		throw new UnsupportedOperationException("Not implemented yet!");
+
+		if(this.procurarIndice(codigo) == INDEXNULL){
+			return false;
+			
+		} else {
+			return true;
+		}
 	}
 	
 	/**
 	 * Insere um novo produto (sem se preocupar com duplicatas)
 	 */
 	public void inserir(Produto produto){
-		//TODO Implement your code here
-		throw new UnsupportedOperationException("Not implemented yet!");
+		this.produtos.add(produto);
+		index++;
 	}
 	
 	/**
@@ -67,8 +89,12 @@ public class RepositorioProdutoArrayList {
 	 * Note que, para localizacao, o código do produto será utilizado.
 	 */
 	public void atualizar(Produto produto){
-		//TODO Implement your code here
-		throw new UnsupportedOperationException("Not implemented yet!");
+
+		int indice = this.procurarIndice(produto.getCodigo());
+		verificaIndice(indice);
+		this.produtos.remove(indice);
+		this.produtos.add(produto);
+			
 	}
 	
 	/**
@@ -77,10 +103,13 @@ public class RepositorioProdutoArrayList {
 	 * @param codigo
 	 */
 	public void remover(int codigo){
-		//TODO Implement your code here
-		throw new UnsupportedOperationException("Not implemented yet!");
-	}
+
+		int indice = this.procurarIndice(codigo);
+		verificaIndice(indice);
+		this.produtos.remove(indice);
 	
+	}
+
 	/**
 	 * Retorna um produto com determinado codigo ou entao um erro, caso o produto nao esteja armazenado
 	 * 
@@ -88,7 +117,19 @@ public class RepositorioProdutoArrayList {
 	 * @return
 	 */
 	public Produto procurar(int codigo){
-		//TODO Implement your code here
-		throw new UnsupportedOperationException("Not implemented yet!");
+		int indice = this.procurarIndice(codigo);
+		verificaIndice(indice);
+		return (Produto) this.produtos.get(indice);
+	}
+	
+	/**
+	 * Metodo que verifica se o indice corresponde a um valor que indique a existencia de produto na estrutura.
+	 * @param indice Inteiro que indica a localização do produto na estrutura.
+	 * @exception RuntimeException caso o indice indique o produto nao exista na estrutura. 
+	 */
+	private void verificaIndice(int indice) {
+		if(indice == INDEXNULL){
+			throw new RuntimeException("Produto Inexistente!");
+		}
 	}
 }
