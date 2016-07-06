@@ -1,6 +1,7 @@
 package solucao.vetor;
 
 import vetor.Aluno;
+import vetor.Vetor;
 
 public class TestarVetor {
 

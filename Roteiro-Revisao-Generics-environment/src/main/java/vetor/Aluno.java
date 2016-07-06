@@ -31,6 +31,9 @@ public class Aluno implements Comparable<Aluno>{
 		return (int) (this.media - o.media);
 	}
 	
-	
+	@Override
+	public String toString(){
+		return this.nome + " " + Double.toString(this.media);
+	}
 	
 }
