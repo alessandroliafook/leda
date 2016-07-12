@@ -12,20 +12,39 @@ public class BubbleSort<T extends Comparable<T>> extends AbstractSorting<T> {
 
 	@Override
 	public void sort(T[] array, int leftIndex, int rightIndex) {
-		
-		int i = leftIndex;
-		boolean change = true;
-		
-		while(i <= rightIndex && change == true){
-			change = false;
-		
-			for(int j = leftIndex; j <= rightIndex - (1 + (i - leftIndex)); j ++){
-				if(array[j].compareTo(array[j+1]) > 0){
-					Util.swap(array, j, j+1);
-					change = true;
-				}
+
+		if (rightIndex - leftIndex == 2) {
+
+			if (array[leftIndex].compareTo(array[rightIndex]) > 0) {
+				Util.swap(array, rightIndex, leftIndex);
 			}
-			i++;
+
+		} else if (rightIndex - leftIndex > 2) {
+
+			boolean change = false;
+			oneStepBubble(array, leftIndex, rightIndex, change);
+
+			if (change = true) {
+				sort(array, leftIndex, --rightIndex);
+			}
+		}
+	}
+
+	/**
+	 * This sort algorithm iterates over the array one time, and move the
+	 * big element to the end of the array.
+	 */
+
+	private void oneStepBubble(T[] array, int leftIndex, int rightIndex, boolean change) {
+
+		if (leftIndex < rightIndex) {
+
+			if (array[leftIndex].compareTo(array[leftIndex + 1]) > 0) {
+				Util.swap(array, leftIndex + 1, leftIndex);
+				change = true;
+			}
+
+			oneStepBubble(array, leftIndex + 1, rightIndex, change);
 		}
 	}
 }

@@ -8,22 +8,35 @@ import util.Util;
  * puts it in the first position. Then chooses the second smallest element and
  * stores it in the second position, and so on until the array is sorted.
  */
-public class SelectionSort<T extends Comparable<T>> extends AbstractSorting<T>{
+public class SelectionSort<T extends Comparable<T>> extends AbstractSorting<T> {
 
 	@Override
 	public void sort(T[] array, int leftIndex, int rightIndex) {
 
-		for(int i = leftIndex; i < rightIndex; i++){
-			
-			int min = i;
+		if (leftIndex < rightIndex) {
+			int smaler = leftIndex;
 
-			for(int j = i+1; j <= rightIndex; j++){
-				if(array[min].compareTo(array[j]) > 0){
-					min = j;
-				}
-			}
-			
-			Util.swap(array, i, min);
+			smaler = selectSmaler(array, leftIndex, rightIndex, smaler);
+
+			Util.swap(array, leftIndex, smaler);
+			sort(array, ++leftIndex, rightIndex);
 		}
+	}
+
+	/**
+	 * This sort algorithm chooses the smallest element from the array and return his index.
+	 */
+	private int selectSmaler(T[] array, int leftIndex, int rightIndex, int smaler) {
+
+		if (leftIndex <= rightIndex) {
+
+			if (array[leftIndex].compareTo(array[smaler]) < 0) {
+				smaler = selectSmaler(array, ++leftIndex, rightIndex, leftIndex);
+
+			} else {
+				smaler = selectSmaler(array, ++leftIndex, rightIndex, smaler);
+			}
+		}
+		return smaler;
 	}
 }
