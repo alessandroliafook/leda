@@ -1,6 +1,5 @@
 package util;
 
-
 /**
  * Class containing useful methods for arrays manipulation.
  */
@@ -29,9 +28,9 @@ public class Util {
 	 * @param size  The desired size
 	 * @return An array of the type and size chosen
 	 */
-	@SuppressWarnings("unchecked")
-	public static <T extends Comparable<T>> T[] makeArray(int size) {
-		T[] array = (T[]) new Comparable<?> [size];
+	public static <T> T[] makeArray(int size) {
+		@SuppressWarnings("unchecked")
+		T[] array = (T[]) new Object[size];
 		return array;
 	}
 	
