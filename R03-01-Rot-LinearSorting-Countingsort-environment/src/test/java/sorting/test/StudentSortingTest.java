@@ -7,6 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import sorting.AbstractSorting;
+import sorting.linearSorting.CountingSort;
+import sorting.linearSorting.ExtendedCountingSort;
 
 public class StudentSortingTest {
 
@@ -15,16 +17,18 @@ public class StudentSortingTest {
 	private Integer[] vetorVazio = {};
 	private Integer[] vetorValoresRepetidos;
 	private Integer[] vetorValoresIguais;
+	private Integer[] vetorNegativo;
 	
 	public AbstractSorting<Integer> implementation;
-
+	public AbstractSorting<Integer> implementation2;
+	
 	@Before
 	public void setUp() {
 		populaVetorTamanhoPar(new Integer[] {30, 28, 7, 29, 11, 26, 4, 22, 23, 31});
 		populaVetorTamanhoImpar(new Integer[] {6, 41, 32, 7, 26, 4, 37, 49, 11, 18, 36});
 		populaVetorRepetido(new Integer[] {4, 9, 3, 4, 0, 5, 1, 4});
 		populaVetorIgual(new Integer[] {6, 6, 6, 6, 6, 6});
-		
+		populaVetorNegativo(new Integer[] {30, 28, 7, -4, 29, 11, 26, 4, 22, 23, 31, -1});		
 		getImplementation();
 	}
 	
@@ -34,8 +38,9 @@ public class StudentSortingTest {
 	 */
 	private void getImplementation() {
 		//TODO O aluno deve instanciar sua implementação abaixo ao invés de null 
-		this.implementation = null;
-		Assert.fail("Implementation not provided");
+		this.implementation = new CountingSort();
+		this.implementation2 = new ExtendedCountingSort();
+
 	}
 
 	public void populaVetorTamanhoPar(Integer[] arrayPadrao){
@@ -54,17 +59,24 @@ public class StudentSortingTest {
 		this.vetorValoresIguais = Arrays.copyOf(arrayPadrao, arrayPadrao.length);
 	}
 
+	public void populaVetorNegativo(Integer[] arrayPadrao){
+		this.vetorNegativo = Arrays.copyOf(arrayPadrao, arrayPadrao.length);
+	}
+
 	// FIM DOS METODOS AUXILIARES DA INICIALIZAÇÃO
 	
 	//MÉTODOS DE TESTE
 	
 	public void genericTest(Integer[] array) {
 		Integer[] copy1 = Arrays.copyOf(array, array.length);
-		implementation.sort(array);
+		Integer[] copy2 = Arrays.copyOf(array, array.length);
+		implementation.sort(copy2);
+		this.implementation2.sort(array);
 		Arrays.sort(copy1);
 		Assert.assertArrayEquals(copy1, array);
+		Assert.assertArrayEquals(copy1, copy2);
 	}
-	
+
 	@Test
 	public void testSort01() {
 		genericTest(vetorTamPar);
@@ -88,6 +100,15 @@ public class StudentSortingTest {
 	@Test
 	public void testSort05() {
 		genericTest(vetorValoresRepetidos);
+	}
+	
+	@Test
+	public void testSort06(){
+		Integer[] copy1 = Arrays.copyOf(vetorNegativo, vetorNegativo.length);
+		this.implementation2.sort(vetorNegativo);
+		Arrays.sort(copy1);
+		Assert.assertArrayEquals(copy1, vetorNegativo);
+
 	}
 	
 	//MÉTODOS QUE OS ALUNOS PODEM CRIAR 
