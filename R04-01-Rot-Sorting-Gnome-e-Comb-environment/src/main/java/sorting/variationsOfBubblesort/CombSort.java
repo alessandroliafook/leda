@@ -10,7 +10,7 @@ public class CombSort<T extends Comparable<T>> extends AbstractSorting<T> {
 	@Override
 	public void sort(T[] array, int leftIndex, int rightIndex) {
 
-		if( ! validaParametros(array, leftIndex, rightIndex)){
+		if (!validaParametros(array, leftIndex, rightIndex)) {
 			return;
 		}
 
@@ -31,16 +31,16 @@ public class CombSort<T extends Comparable<T>> extends AbstractSorting<T> {
 
 				i++;
 			}
-			
+
 			gap = gap / fator;
 			jump = (int) gap;
 		}
-		
-		bubleSort(array, leftIndex, rightIndex);
-		
+
+		bubbleSort(array, leftIndex, rightIndex);
+
 	}
 
-	public boolean validaParametros(T[] array, int leftIndex, int rightIndex) {
+	private boolean validaParametros(T[] array, int leftIndex, int rightIndex) {
 
 		if (array == null || leftIndex < 0 || leftIndex >= rightIndex || rightIndex >= array.length) {
 			return false;
@@ -48,46 +48,27 @@ public class CombSort<T extends Comparable<T>> extends AbstractSorting<T> {
 
 		return true;
 	}
-	
-	/**
-	 * The bubble sort algorithm iterates over the array multiple times, pushing big
-	 * elements to the right by swapping adjacent elements, until the array is
-	 * sorted.
-	 */
-	public void bubleSort(T[] array, int leftIndex, int rightIndex) {
 
-		if (rightIndex - leftIndex == 2) {
+	private void bubbleSort(T[] array, int leftIndex, int rightIndex) {
 
-			if (array[leftIndex].compareTo(array[rightIndex]) > 0) {
-				Util.swap(array, rightIndex, leftIndex);
+		boolean change = true;
+		int i = leftIndex;
+		
+		while(change == true && i <= rightIndex){
+
+			change = false;
+			
+			for (int j = leftIndex; j < rightIndex; j++) {
+
+				if (array[j].compareTo(array[j + 1]) > 0) {
+					Util.swap(array, j, j + 1);
+					change = true;
+				}
+
 			}
-
-		} else if (rightIndex - leftIndex > 2) {
-
-			boolean change = false;
-			oneStepBubble(array, leftIndex, rightIndex, change);
-
-			if (change = true) {
-				sort(array, leftIndex, --rightIndex);
-			}
+			
+			i++;
 		}
-	}
 
-	/**
-	 * This sort algorithm iterates over the array one time, and move the
-	 * big element to the end of the array.
-	 */
-
-	private void oneStepBubble(T[] array, int leftIndex, int rightIndex, boolean change) {
-
-		if (leftIndex < rightIndex) {
-
-			if (array[leftIndex].compareTo(array[leftIndex + 1]) > 0) {
-				Util.swap(array, leftIndex + 1, leftIndex);
-				change = true;
-			}
-
-			oneStepBubble(array, leftIndex + 1, rightIndex, change);
-		}
 	}
 }

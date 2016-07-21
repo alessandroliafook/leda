@@ -39,7 +39,7 @@ public class GnomeSort<T extends Comparable<T>> extends AbstractSorting<T> {
 		}
 	}
 
-	public boolean validaParametros(T[] array, int leftIndex, int rightIndex) {
+	private boolean validaParametros(T[] array, int leftIndex, int rightIndex) {
 
 		if (array == null || leftIndex < 0 || leftIndex >= rightIndex || rightIndex >= array.length) {
 			return false;
