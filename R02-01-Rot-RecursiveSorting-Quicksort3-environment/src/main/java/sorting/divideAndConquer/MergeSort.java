@@ -28,7 +28,7 @@ public class MergeSort<T extends Comparable<T>> extends AbstractSorting<T> {
 
 		int mid = (rightIndex + leftIndex) / 2;
 		T[] arrayLeft = Arrays.copyOfRange(array, leftIndex, mid);
-		T[] arrayRight = Arrays.copyOfRange(array, mid, rightIndex + 1);
+		T[] arrayRight = Arrays.copyOfRange(array, mid, rightIndex);
 
 		int i = leftIndex;
 		int j = 0;
@@ -49,7 +49,7 @@ public class MergeSort<T extends Comparable<T>> extends AbstractSorting<T> {
 		}
 
 		while (k < arrayRight.length) {
-			array[i++] = arrayLeft[k++];
+			array[i++] = arrayRight[k++];
 		}
 	}
 
