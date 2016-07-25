@@ -1,5 +1,7 @@
 package sorting.divideAndConquer;
 
+import java.util.Arrays;
+
 import sorting.AbstractSorting;
 
 /**
@@ -10,59 +12,55 @@ import sorting.AbstractSorting;
  */
 public class MergeSort<T extends Comparable<T>> extends AbstractSorting<T> {
 
-	@SuppressWarnings("unchecked")
 	public void sort(T[] array, int leftIndex, int rightIndex) {
-	
-		int length = rightIndex - leftIndex;
-		T[] tmpArray = (T[]) new Comparable<?> [length + 1];
-		
-		mergeSort(array, tmpArray,  leftIndex, rightIndex);
+
+		if (! validaParametros(array, leftIndex, rightIndex)) {
+			return;
+		}
+
+		int mid = (rightIndex + leftIndex) / 2;
+		sort(array, leftIndex, mid);
+		sort(array, mid, rightIndex);
+		merge(array, leftIndex, rightIndex);
 	}
 
+	private void merge(T[] array, int leftIndex, int rightIndex) {
 
-	private void mergeSort(T [ ] array, T [ ] tmpArray, int leftIndex, int rightIndex)	{
-		
-		if( leftIndex < rightIndex ) {
+		int mid = (rightIndex + leftIndex) / 2;
+		T[] arrayLeft = Arrays.copyOfRange(array, leftIndex, mid);
+		T[] arrayRight = Arrays.copyOfRange(array, mid, rightIndex + 1);
+
+		int i = leftIndex;
+		int j = 0;
+		int k = 0;
+
+		while (j < arrayLeft.length && k < arrayRight.length) {
 			
-			int center = (leftIndex + rightIndex) / 2;
-		
-			mergeSort(array, tmpArray, leftIndex, center);
-			mergeSort(array, tmpArray, center + 1, rightIndex);
+			if (arrayLeft[j].compareTo(arrayRight[k]) <= 0) {
+				array[i++] = arrayLeft[j++];
 			
-			merge(array, tmpArray, leftIndex, center + 1, rightIndex);
+			} else {
+				array[i++] = arrayRight[k++];
+			}
+		}
+
+		while (j < arrayLeft.length) {
+			array[i++] = arrayLeft[j++];
+		}
+
+		while (k < arrayRight.length) {
+			array[i++] = arrayLeft[k++];
 		}
 	}
 
+	private boolean validaParametros(T[] array, int leftIndex, int rightIndex) {
 
-    private void merge(T[ ] array, T[ ] tmpArray, int leftIndex, int rightIndex, int endIndex) {
-        
-    	int leftEnd = rightIndex - 1;
-        int k = leftIndex;
-        int num = endIndex - leftIndex + 1;
+		if (array == null || rightIndex >= array.length || leftIndex >= rightIndex || leftIndex < 0
+				|| rightIndex - leftIndex <= 1) {
+			return false;
+		}
 
-        while(leftIndex <= leftEnd && rightIndex <= endIndex) {
-            
-        	if(array[leftIndex].compareTo(array[rightIndex]) <= 0){
-        		
-                tmpArray[k++] = array[leftIndex++];
-            
-        	} else {
-                tmpArray[k++] = array[rightIndex++];
-        	}
-        }
-        
-        while(leftIndex <= leftEnd) {    
-            tmpArray[k++] = array[leftIndex++];
-        }
-        
-        while(rightIndex <= endIndex) {  
-            tmpArray[k++] = array[rightIndex++];
+		return true;
+	}
 
-        }
-
-        for(int i = 0; i < num; i++, endIndex--) {
-            array[endIndex] = tmpArray[endIndex];
-        }
-    }
- }
-
+}
