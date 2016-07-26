@@ -19,52 +19,74 @@ public class OddEvenBubbleSort<T extends Comparable<T>> extends AbstractSorting<
 		if (!validaParametros(array, leftIndex, rightIndex)) {
 			return;
 		}
-		
-		boolean flag = true;
+
+		boolean trade = true;
 		int j = leftIndex;
+
+		while (trade == true && j <= rightIndex) {
+
+			trade = false;
+			int indexEven = leftIndex;
+
+			while (indexEven <= rightIndex - 2) {
+
+				if (array[indexEven].compareTo(array[indexEven + 2]) > 0) {
 		
-			while(flag == true && j <= rightIndex){
-				
-				flag = false;
-				
-			for (int i = leftIndex; i <= rightIndex - 2; i++) {
-				if (array[i].compareTo(array[i + 2]) > 0) {
-					Util.swap(array, i, i + 2);
-					flag = true;
+					Util.swap(array, indexEven, indexEven + 2);
+					trade = true;
 				}
+		
+				indexEven += 2;
 			}
+			
+			int indexOdd = leftIndex + 1;
+			
+			while (indexOdd <= rightIndex - 2) {
+
+				if (array[indexOdd].compareTo(array[indexOdd + 2]) > 0) {
+		
+					Util.swap(array, indexOdd, indexOdd + 2);
+					trade = true;
+				}
+				indexOdd += 2;
+			}
+
 			j++;
 		}
+		
 		merge(array, leftIndex, rightIndex);
-
 	}
 
 	@SuppressWarnings("unchecked")
 	private void merge(T[] array, int leftIndex, int rightIndex) {
 
-		int indexPar = leftIndex;
-		int indexImpar = leftIndex + 1;
+		int indexEven = leftIndex;
+		int indexOdd = leftIndex + 1;
 		int indexCopy = 0;
 		T[] arrayTemp = (T[]) new Comparable<?>[rightIndex - leftIndex + 1];
 
-		while (indexPar <= rightIndex && indexImpar <= rightIndex) {
-			if (array[indexPar].compareTo(array[indexImpar]) < 0) {
-				arrayTemp[indexCopy++] = array[indexPar];
-				indexPar = indexPar + 2;
+		while (indexEven <= rightIndex && indexOdd <= rightIndex) {
+			
+			if (array[indexEven].compareTo(array[indexOdd]) <= 0) {
+				arrayTemp[indexCopy++] = array[indexEven];
+				indexEven = indexEven + 2;
+		
 			} else {
-				arrayTemp[indexCopy++] = array[indexImpar];
-				indexImpar = indexImpar + 2;
+				arrayTemp[indexCopy++] = array[indexOdd];
+				indexOdd = indexOdd + 2;
 			}
 		}
 
-		while (indexPar <= rightIndex) {
-			arrayTemp[indexCopy++] = array[indexPar];
-			indexPar = indexPar + 2;
+		while (indexEven <= rightIndex) {
+			
+			arrayTemp[indexCopy++] = array[indexEven];
+			indexEven = indexEven + 2;
 		}
 
-		while (indexImpar <= rightIndex) {
-			arrayTemp[indexCopy++] = array[indexImpar];
-			indexImpar = indexImpar + 2;
+		while (indexOdd <= rightIndex) {
+			
+			arrayTemp[indexCopy++] = array[indexOdd];
+			indexOdd = indexOdd + 2;
 		}
 
 		for (int index = 0; index < arrayTemp.length; index++) {
