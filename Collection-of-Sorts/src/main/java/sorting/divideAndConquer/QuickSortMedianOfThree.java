@@ -1,6 +1,7 @@
 package sorting.divideAndConquer;
 
 import sorting.AbstractSorting;
+import util.Util;
 
 /**
  * A classe QuickSortMedianOfThree representa uma variação do QuickSort que
@@ -20,5 +21,67 @@ public class QuickSortMedianOfThree<T extends Comparable<T>> extends AbstractSor
 
 	public void sort(T[] array, int leftIndex, int rightIndex) {
 
+		if(! validaParametros(array, leftIndex, rightIndex)){
+			return;
+		}
+		
+		partition(array, leftIndex, rightIndex);
+		
+		int left = leftIndex + 1;
+		int right = rightIndex - 1;
+		T pivot = array[rightIndex - 1];
+		
+		while(left <= right){
+			
+			while(array[left].compareTo(pivot) < 0){
+				left++;
+			}
+			
+			while(array[right].compareTo(pivot) > 0){
+				right--;
+			}
+			
+			if(left <= right){
+				Util.swap(array, right--, left++);
+			}
+		}
+		
+		if(leftIndex < right){
+			sort(array, leftIndex, right);
+		}
+		
+		if(left < rightIndex){
+			sort(array, left, rightIndex);
+		}
+		
 	}
+	
+	private boolean validaParametros(T[] array, int leftIndex, int rightIndex) {
+
+		if (array == null || leftIndex < 0 || leftIndex >= rightIndex || rightIndex >= array.length
+				|| rightIndex - leftIndex < 1) {
+			return false;
+		}
+
+		return true;
+	}
+	
+	private void partition(T[] array, int leftIndex, int rightIndex){
+		
+		int midIndex = (leftIndex + rightIndex) / 2;
+		
+		if(array[leftIndex].compareTo(array[midIndex]) > 0){
+			Util.swap(array, leftIndex, midIndex);
+		}
+		if(array[leftIndex].compareTo(array[rightIndex]) > 0){
+			Util.swap(array, leftIndex, rightIndex);
+		}
+		if(array[midIndex].compareTo(array[rightIndex]) > 0){
+			Util.swap(array, midIndex, rightIndex);
+		}
+		
+		Util.swap(array, midIndex, rightIndex - 1);
+	}
+	
+
 }
