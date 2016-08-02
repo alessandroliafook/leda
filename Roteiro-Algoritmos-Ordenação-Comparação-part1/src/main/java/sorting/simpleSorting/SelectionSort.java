@@ -13,30 +13,37 @@ public class SelectionSort<T extends Comparable<T>> extends AbstractSorting<T> {
 	@Override
 	public void sort(T[] array, int leftIndex, int rightIndex) {
 
-		if (leftIndex < rightIndex) {
-			int smaler = leftIndex;
-
-			smaler = selectSmaler(array, leftIndex, rightIndex, smaler);
-
-			Util.swap(array, leftIndex, smaler);
-			sort(array, ++leftIndex, rightIndex);
+		if (! validaParametros(array, leftIndex, rightIndex)){
+			return;
 		}
-	}
 
-	/**
-	 * This sort algorithm chooses the smallest element from the array and return his index.
-	 */
-	private int selectSmaler(T[] array, int leftIndex, int rightIndex, int smaler) {
-
-		if (leftIndex <= rightIndex) {
-
-			if (array[leftIndex].compareTo(array[smaler]) < 0) {
-				smaler = selectSmaler(array, ++leftIndex, rightIndex, leftIndex);
-
-			} else {
-				smaler = selectSmaler(array, ++leftIndex, rightIndex, smaler);
+		for(int i = leftIndex; i <= rightIndex; i++){
+			
+			int min = i;
+			
+			for(int j = i; j <= rightIndex; j++){
+				
+				if(array[j].compareTo(array[min]) < 0){
+					min = j;
+				}
+				
+			}
+			
+			if(i != min) {
+				Util.swap(array, i, min);
 			}
 		}
-		return smaler;
 	}
+
+	private boolean validaParametros(T[] array, int leftIndex, int rightIndex) {
+
+		if (array == null || leftIndex < 0 || leftIndex >= rightIndex || rightIndex - leftIndex < 2
+				|| rightIndex >= array.length) {
+			return false;
+		}
+
+		return true;
+	}
+
+	
 }

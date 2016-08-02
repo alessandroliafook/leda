@@ -13,38 +13,37 @@ public class BubbleSort<T extends Comparable<T>> extends AbstractSorting<T> {
 	@Override
 	public void sort(T[] array, int leftIndex, int rightIndex) {
 
-		if (rightIndex - leftIndex == 2) {
+		if (!validaParametros(array, leftIndex, rightIndex)) {
+			return;
+		}
 
-			if (array[leftIndex].compareTo(array[rightIndex]) > 0) {
-				Util.swap(array, rightIndex, leftIndex);
+		boolean flag = true;
+		int i = (rightIndex + 1) - leftIndex;
+		int pass = 0;
+
+		while (flag == true && pass <= i) {
+
+			flag = false;
+
+			for (int j = leftIndex; j < rightIndex - pass; j++) {
+
+				if (array[j].compareTo(array[j + 1]) > 0) {
+					Util.swap(array, j, j + 1);
+					flag = true;
+				}
 			}
-
-		} else if (rightIndex - leftIndex > 2) {
-
-			boolean change = false;
-			oneStepBubble(array, leftIndex, rightIndex, change);
-
-			if (change = true) {
-				sort(array, leftIndex, --rightIndex);
-			}
+			pass++;
 		}
 	}
 
-	/**
-	 * This sort algorithm iterates over the array one time, and move the
-	 * big element to the end of the array.
-	 */
+	private boolean validaParametros(T[] array, int leftIndex, int rightIndex) {
 
-	private void oneStepBubble(T[] array, int leftIndex, int rightIndex, boolean change) {
-
-		if (leftIndex < rightIndex) {
-
-			if (array[leftIndex].compareTo(array[leftIndex + 1]) > 0) {
-				Util.swap(array, leftIndex + 1, leftIndex);
-				change = true;
-			}
-
-			oneStepBubble(array, leftIndex + 1, rightIndex, change);
+		if (array == null || leftIndex < 0 || leftIndex >= rightIndex || rightIndex - leftIndex < 2
+				|| rightIndex >= array.length) {
+			return false;
 		}
+
+		return true;
 	}
+
 }

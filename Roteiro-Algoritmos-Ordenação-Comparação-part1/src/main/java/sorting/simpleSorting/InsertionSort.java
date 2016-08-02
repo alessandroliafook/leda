@@ -1,6 +1,7 @@
 package sorting.simpleSorting;
 
 import sorting.AbstractSorting;
+import util.Util;
 
 /**
  * As the insertion sort algorithm iterates over the array, it makes the
@@ -13,24 +14,31 @@ public class InsertionSort<T extends Comparable<T>> extends AbstractSorting<T> {
 	@Override
 	public void sort(T[] array, int leftIndex, int rightIndex) {
 
-		for(int i = leftIndex + 1; i <= rightIndex; i++){
-			
-			T key = array[i];
-			insertKey(array, leftIndex, i, key);
+		if (! validaParam(array, leftIndex, rightIndex)) {
+			return;
 		}
-	}
-	
-	private void insertKey(T[] array, int leftIndex, int rightIndex, T key){
-		
-		if(rightIndex > leftIndex && array[rightIndex - 1].compareTo(key) > 0){
-			
-			array[rightIndex] = array[rightIndex - 1];
-			insertKey(array, leftIndex, rightIndex - 1, key);
-		
-		} else {
-			
-			array[rightIndex] = key;
-		}
-	}
-}
 
+		for (int i = leftIndex + 1; i <= rightIndex; i++) {
+
+			int j = i;
+
+			while (j > leftIndex && array[j].compareTo(array[j - 1]) < 0) {
+				Util.swap(array, j, j - 1);
+				j--;
+			}
+		}
+	}
+
+	private boolean validaParam(T[] array, int leftIndex, int rightIndex) {
+
+		if (array == null || leftIndex < 0 || leftIndex >= rightIndex || rightIndex - leftIndex == 1
+				|| rightIndex >= array.length) {
+			
+			return false;
+
+		}
+
+		return true;
+	}
+
+}
