@@ -21,102 +21,67 @@ public class QuickSortMedianOfThree<T extends Comparable<T>> extends AbstractSor
 
 	public void sort(T[] array, int leftIndex, int rightIndex) {
 
-		int size = rightIndex - leftIndex + 1;
-
-		if (size <= 3) {
-			speedSort(array, leftIndex, rightIndex);
-
-		} else {
-			
-			T pivot = choosePivot(array, leftIndex, rightIndex);
-			int partition = applyParticion(array, leftIndex, rightIndex, pivot);
-
-			sort(array, leftIndex, partition - 1);
-			sort(array, partition + 1, rightIndex);
+		if(! validaParametros(array, leftIndex, rightIndex)){
+			return;
 		}
-
-	}
-
-	/**
-	 * Metodo que escolhe o pivo, entre os elementos do inicio, meio e fim do Array
-	 * ordenando aqueles entre si.
-	 */
-	public T choosePivot(T[] array, int leftIndex, int rightIndex) {
 		
-		int middleIndex = (leftIndex + rightIndex) / 2;
-
-		sortOf3(array, leftIndex, middleIndex, rightIndex);
-		Util.swap(array, middleIndex, rightIndex - 1);
-
-		return array[rightIndex - 1];
-	}
-
-	/**
-	 * Metodo que seleciona o indice do array onde deve ocorrer a particao para otimizar a 
-	 * ordenacao.
-	 */
-	public int applyParticion(T[] array, int leftIndex, int rightIndex, T pivot) {
+		partition(array, leftIndex, rightIndex);
 		
-		int leftPtr = leftIndex;
-		int rightPtr = rightIndex - 1;
-		boolean flag = true;
+		int left = leftIndex + 1;
+		int right = rightIndex - 1;
+		T pivot = array[rightIndex - 1];
 		
-		while (flag) {
+		while(left <= right){
 			
-			while (array[++leftPtr].compareTo(pivot) < 0) {
-				;
+			while(array[left].compareTo(pivot) < 0){
+				left++;
 			}
 			
-			while (array[--rightPtr].compareTo(pivot) > 0) {
-				;
+			while(array[right].compareTo(pivot) > 0){
+				right--;
 			}
 			
-			if (leftPtr >= rightPtr) {
-				flag = false;
-			
-			} else {
-				Util.swap(array, leftPtr, rightPtr);
+			if(left <= right){
+				Util.swap(array, right--, left++);
 			}
 		}
-
-		Util.swap(array, leftPtr, rightIndex - 1);
-		return leftPtr;
-	}
-
-	/**
-	 * Metodo que ordena rapidamente uma lista que contenha 3 ou menos elementos.
-	 */
-	public void speedSort(T[] array, int leftIndex, int rightIndex) {
 		
-		int size = rightIndex - leftIndex + 1;
-		
-		if (size == 2) {
-
-			if (array[leftIndex].compareTo(array[rightIndex]) > 0) {
-				Util.swap(array, leftIndex, rightIndex);
-			}
-		
-		} else if (size == 3) {
-			
-			sortOf3(array, leftIndex, rightIndex - 1, rightIndex);
+		if(leftIndex < right){
+			sort(array, leftIndex, right);
 		}
+		
+		if(left < rightIndex){
+			sort(array, left, rightIndex);
+		}
+		
 	}
 	
-	/**
-	 * Metodo que ordena tres elementos de uma lista entre si.
-	 */
-	public void sortOf3(T[] array, int leftIndex, int middleIndex, int rightIndex){
+	private boolean validaParametros(T[] array, int leftIndex, int rightIndex) {
 
-		if (array[leftIndex].compareTo(array[middleIndex]) > 0) {
-			Util.swap(array, leftIndex, middleIndex);
+		if (array == null || leftIndex < 0 || leftIndex >= rightIndex || rightIndex >= array.length
+				|| rightIndex - leftIndex < 1) {
+			return false;
 		}
+
+		return true;
+	}
+	
+	private void partition(T[] array, int leftIndex, int rightIndex){
 		
-		if (array[leftIndex].compareTo(array[rightIndex]) > 0) {
+		int midIndex = (leftIndex + rightIndex) / 2;
+		
+		if(array[leftIndex].compareTo(array[midIndex]) > 0){
+			Util.swap(array, leftIndex, midIndex);
+		}
+		if(array[leftIndex].compareTo(array[rightIndex]) > 0){
 			Util.swap(array, leftIndex, rightIndex);
 		}
-		
-		if (array[middleIndex].compareTo(array[rightIndex]) > 0) {
-			Util.swap(array, middleIndex, rightIndex);
+		if(array[midIndex].compareTo(array[rightIndex]) > 0){
+			Util.swap(array, midIndex, rightIndex);
 		}
+		
+		Util.swap(array, midIndex, rightIndex - 1);
 	}
+	
+
 }

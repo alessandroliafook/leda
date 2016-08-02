@@ -12,55 +12,53 @@ import sorting.AbstractSorting;
  */
 public class MergeSort<T extends Comparable<T>> extends AbstractSorting<T> {
 
+	@Override
 	public void sort(T[] array, int leftIndex, int rightIndex) {
 
-		if (! validaParametros(array, leftIndex, rightIndex)) {
+		if (!validaParametros(array, leftIndex, rightIndex)) {
 			return;
 		}
-
+		
 		int mid = (rightIndex + leftIndex) / 2;
+		
 		sort(array, leftIndex, mid);
-		sort(array, mid, rightIndex);
+		sort(array, mid + 1, rightIndex);
 		merge(array, leftIndex, rightIndex);
 	}
 
 	private void merge(T[] array, int leftIndex, int rightIndex) {
 
 		int mid = (rightIndex + leftIndex) / 2;
-		T[] arrayLeft = Arrays.copyOfRange(array, leftIndex, mid);
-		T[] arrayRight = Arrays.copyOfRange(array, mid, rightIndex);
-
-		int i = leftIndex;
+		
+		T[] leftArray = Arrays.copyOfRange(array, leftIndex, mid + 1);
+		T[] rightArray = Arrays.copyOfRange(array, mid + 1, rightIndex + 1);
+		int i = 0;
 		int j = 0;
-		int k = 0;
-
-		while (j < arrayLeft.length && k < arrayRight.length) {
-			
-			if (arrayLeft[j].compareTo(arrayRight[k]) <= 0) {
-				array[i++] = arrayLeft[j++];
-			
+		
+		while(i < leftArray.length && j < rightArray.length){
+			if(leftArray[i].compareTo(rightArray[j]) <= 0){
+				array[leftIndex++] = leftArray[i++];
 			} else {
-				array[i++] = arrayRight[k++];
+				array[leftIndex++] = rightArray[j++];
 			}
 		}
 
-		while (j < arrayLeft.length) {
-			array[i++] = arrayLeft[j++];
+		while(i < leftArray.length){
+			array[leftIndex++] = leftArray[i++];
 		}
 
-		while (k < arrayRight.length) {
-			array[i++] = arrayRight[k++];
+		while(j < rightArray.length){
+			array[leftIndex++] = rightArray[j++];
 		}
 	}
 
 	private boolean validaParametros(T[] array, int leftIndex, int rightIndex) {
 
-		if (array == null || rightIndex >= array.length || leftIndex >= rightIndex || leftIndex < 0
-				|| rightIndex - leftIndex <= 1) {
+		if (array == null || leftIndex < 0 || leftIndex >= rightIndex || rightIndex >= array.length
+				|| rightIndex - leftIndex < 1) {
 			return false;
 		}
 
 		return true;
 	}
-
 }

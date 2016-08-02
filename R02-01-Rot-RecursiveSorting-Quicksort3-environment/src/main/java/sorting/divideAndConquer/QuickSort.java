@@ -13,39 +13,51 @@ import util.Util;
  */
 public class QuickSort<T extends Comparable<T>> extends AbstractSorting<T> {
 
+	@Override
 	public void sort(T[] array, int leftIndex, int rightIndex) {
 
-		if(array.length == 0){
+		if (!validaParametros(array, leftIndex, rightIndex)) {
 			return;
 		}
+
+		int left = leftIndex;
+		int right = rightIndex;
+		T pivot = array[(leftIndex + rightIndex) / 2];
+
+		while (left <= right) {
+
+			while (array[left].compareTo(pivot) < 0) {
+				left++;
+			}
+
+			while (array[right].compareTo(pivot) > 0) {
+				right--;
+			}
+			if (left <= right) {
+				Util.swap(array, left, right);
+				left++;
+				right--;
+			}
+		}
+
+		if(left < rightIndex){
+			sort(array, left, rightIndex);
+		} 
 		
-		int i = leftIndex;
-		int j = rightIndex;
-		T pivot = array[leftIndex + (rightIndex - leftIndex) / 2];
-		
-		while (i <= j) {
-
-			while (array[i].compareTo(pivot) < 0) {
-				i++;
-			}
-
-			while (array[j].compareTo(pivot) > 0) {
-				j--;
-			}
-
-			if (i <= j) {
-				Util.swap(array, i, j);
-				i++;
-				j--;
-			}
+		if (leftIndex < right){
+			sort(array, leftIndex, right);
 		}
 
-		if (leftIndex < j) {
-			sort(array, leftIndex, j);
-		}
-
-		if (i < rightIndex) {
-			sort(array, i, rightIndex);
-		}
 	}
+
+	private boolean validaParametros(T[] array, int leftIndex, int rightIndex) {
+
+		if (array == null || leftIndex < 0 || leftIndex >= rightIndex || rightIndex >= array.length
+				|| rightIndex - leftIndex < 1) {
+			return false;
+		}
+
+		return true;
+	}
+
 }
