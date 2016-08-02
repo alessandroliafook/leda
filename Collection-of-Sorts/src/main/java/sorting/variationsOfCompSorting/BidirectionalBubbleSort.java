@@ -8,29 +8,35 @@ public class BidirectionalBubbleSort<T extends Comparable<T>> extends AbstractSo
 	@Override
 	public void sort(T[] array, int leftIndex, int rightIndex) {
 
-		if(! validaParametros(array, leftIndex, rightIndex)){
+		if (!validaParametros(array, leftIndex, rightIndex)) {
 			return;
 		}
+
+		boolean wasTrade = true;
 		
-		
-			while(rightIndex >= leftIndex){
-				
-				for(int i = leftIndex; i < rightIndex; i ++){
-					
-					if(array[i].compareTo(array[i + 1]) > 0){
-						Util.swap(array, i, i + 1);
-					}
+		while (rightIndex >= leftIndex && wasTrade == true) {
+
+			wasTrade = false;
+			
+			for (int i = leftIndex; i < rightIndex; i++) {
+
+				if (array[i].compareTo(array[i + 1]) > 0) {
+					Util.swap(array, i, i + 1);
+					wasTrade = true;
 				}
-				rightIndex--;
-				
-				for(int j = rightIndex; j > leftIndex; j--){
-					
-					if(array[j].compareTo(array[j - 1]) < 0){
-						Util.swap(array, j, j - 1);
-					}
-					
+			}
+			
+			rightIndex--;
+
+			for (int j = rightIndex; j > leftIndex; j--) {
+
+				if (array[j].compareTo(array[j - 1]) < 0) {
+					Util.swap(array, j, j - 1);
+					wasTrade = true;
 				}
-				leftIndex++;
+			}
+
+			leftIndex++;
 		}
 	}
 

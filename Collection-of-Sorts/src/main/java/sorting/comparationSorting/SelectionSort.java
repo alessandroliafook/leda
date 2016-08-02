@@ -23,7 +23,10 @@ public class SelectionSort <T extends Comparable<T>> extends AbstractSorting<T> 
 				}
 				
 			}
-			Util.swap(array, i, min);
+			
+			if(i != min) {
+				Util.swap(array, i, min);
+			}
 		}
 	}
 
