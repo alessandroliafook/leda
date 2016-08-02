@@ -39,7 +39,7 @@ public class QuickSort<T extends Comparable<T>> extends AbstractSorting<T> {
 				right--;
 			}
 		}
-		
+
 		if(left < rightIndex){
 			sort(array, left, rightIndex);
 		} 
