@@ -82,13 +82,18 @@ public class StudentQueueTest {
 	public void testDequeueComErro() throws QueueUnderflowException {
 		assertEquals(new Integer(1),queue3.dequeue()); //vai depender do tamanho que a fial foi iniciada!!!
 	}
-	@Test
+ 	@Test
 	public void testCircular() throws QueueUnderflowException, QueueOverflowException{
 
 		assertTrue(queue2.isFull());
 		queue2.dequeue();
 		assertFalse(queue2.isFull());
+
 		queue2.enqueue(10);
 		assertTrue(queue2.isFull());
-	}
+
+		queue2.dequeue();
+		queue2.dequeue();
+		assertTrue(queue2.isEmpty());
+	} 
 }
