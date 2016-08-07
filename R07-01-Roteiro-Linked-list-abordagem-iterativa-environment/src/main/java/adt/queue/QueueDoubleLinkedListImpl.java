@@ -5,43 +5,73 @@ import adt.linkedList.DoubleLinkedListImpl;
 
 public class QueueDoubleLinkedListImpl<T> implements Queue<T> {
 
-	
 	protected DoubleLinkedList<T> list;
 	protected int size;
-	
+
 	public QueueDoubleLinkedListImpl(int size) {
 		this.size = size;
 		this.list = new DoubleLinkedListImpl<T>();
 	}
-	
+
 	@Override
 	public void enqueue(T element) throws QueueOverflowException {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+
+		if(isFull()){
+			throw new QueueOverflowException();
+			
+		} else {
+			list.insert(element);
+		}
+
 	}
 
 	@Override
 	public T dequeue() throws QueueUnderflowException {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+
+		if (isEmpty()) {
+			throw new QueueUnderflowException();
+	
+		} else {
+			T[] array = list.toArray();
+			list.removeFirst();
+			return array[0];
+		}
 	}
 
 	@Override
 	public T head() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		
+		if(isEmpty()){
+			return null;
+		
+		} else {
+			
+			T[] array = list.toArray();
+			return array[0];
+		} 
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+
+		if(list.size() == 0){
+			return true;
+
+		} else {
+			return false;
+		}
 	}
 
 	@Override
 	public boolean isFull() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+
+		if(this.size == list.size()){
+			return true;
+			
+		} else {
+			return false;
+		}
+	
 	}
 
 }
