@@ -18,13 +18,22 @@ public class StudentLinkedListTest {
 		lista1.insert(3);
 		lista1.insert(2);
 		lista1.insert(1);
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> 0a81b92d489e4c7112fd7a9b6ab4a4dbde291975
 	}
 	
 	private void getImplementations(){
 		//TODO O aluno deve ajustar aqui para instanciar sua implementação
+<<<<<<< HEAD
 		lista1 = new SingleLinkedListImpl<>();
 		lista2 = new SingleLinkedListImpl<>();
+=======
+		lista1 = new DoubleLinkedListImpl<>();
+		lista2 = new DoubleLinkedListImpl<>();
+>>>>>>> 0a81b92d489e4c7112fd7a9b6ab4a4dbde291975
 	}
 
 	@Test
@@ -66,10 +75,15 @@ public class StudentLinkedListTest {
 		lista1.remove(1);
 		Assert.assertEquals(1, lista1.size());
 		
+<<<<<<< HEAD
 		Assert.assertEquals(3, lista1.size());
 		lista1.remove(4);
 		lista1.remove(2);
 		lista1.remove(1);
+=======
+		Assert.assertEquals(1, lista1.size());
+		lista1.remove(4);
+>>>>>>> 0a81b92d489e4c7112fd7a9b6ab4a4dbde291975
 		Assert.assertEquals(1, lista1.size());
 	}
 

@@ -62,9 +62,9 @@
 							<goal>compact</goal>
 						</goals>
 						<configuration>
-							<matricula>115111900</matricula>
+							<matricula>INSIRA NEU NUMERO DE MATRICULA</matricula>
 							<semestre>2016.1</semestre>
-							<roteiro>R07-01</roteiro>
+							<roteiro>R0X-0X</roteiro>
 							<url>http://web.cloud.lsd.ufcg.edu.br:44174/submission/submitRoteiro</url>
 						</configuration>
 					</execution>

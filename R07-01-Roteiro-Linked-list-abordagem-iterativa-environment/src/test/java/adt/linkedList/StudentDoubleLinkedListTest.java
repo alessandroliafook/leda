@@ -27,9 +27,15 @@ public class StudentDoubleLinkedListTest extends StudentLinkedListTest{
 	
 	private void getImplementations(){
 		//TODO O aluno deve ajustar aqui para instanciar sua implementação
+<<<<<<< HEAD
 		lista1 = null;
 		lista2 = null;
 		lista3 = null;
+=======
+		lista1 = new DoubleLinkedListImpl<>();
+		lista2 = new DoubleLinkedListImpl<>();
+		lista3 = new DoubleLinkedListImpl<>();
+>>>>>>> 0a81b92d489e4c7112fd7a9b6ab4a4dbde291975
 	}
 
 		
@@ -52,4 +58,57 @@ public class StudentDoubleLinkedListTest extends StudentLinkedListTest{
 		lista1.removeLast();
 		Assert.assertArrayEquals(new Integer[] { 3, 2 }, lista1.toArray());
 	}
+<<<<<<< HEAD
+=======
+	
+	@Test
+	public void testIsEmpty() {
+		Assert.assertFalse(lista1.isEmpty());
+		Assert.assertTrue(lista2.isEmpty());
+	}
+
+	@Test
+	public void testSize() {
+		Assert.assertEquals(3, lista1.size());
+		Assert.assertEquals(0, lista2.size());
+	}
+
+	@Test
+	public void testSearch() {
+		Assert.assertTrue(2 == lista1.search(2));
+		Assert.assertNull(lista1.search(4));
+		Assert.assertFalse(3 == lista1.search(2));
+	}
+
+	@Test
+	public void testInsert() {
+		Assert.assertEquals(3, lista1.size());
+		lista1.insert(5);
+		lista1.insert(7);
+		Assert.assertEquals(5, lista1.size());
+		
+		Assert.assertEquals(0, lista2.size());
+		lista2.insert(4);
+		lista2.insert(7);
+		Assert.assertEquals(2, lista2.size());
+	}
+
+	@Test
+	public void testRemove() {
+		Assert.assertEquals(3, lista1.size());
+		lista1.remove(2);
+		lista1.remove(1);
+		Assert.assertEquals(1, lista1.size());
+		
+		Assert.assertEquals(1, lista1.size());
+		lista1.remove(4);
+		Assert.assertEquals(1, lista1.size());
+	}
+
+	@Test
+	public void testToArray() {
+		Assert.assertArrayEquals(new Integer[] {}, lista2.toArray());
+		Assert.assertArrayEquals(new Integer[] { 3, 2, 1 }, lista1.toArray());
+	}
+>>>>>>> 0a81b92d489e4c7112fd7a9b6ab4a4dbde291975
 }
