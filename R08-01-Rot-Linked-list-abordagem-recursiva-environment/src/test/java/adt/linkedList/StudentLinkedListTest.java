@@ -5,26 +5,26 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class StudentLinkedListTest {
-	
+
 	private LinkedList<Integer> lista1;
 	private LinkedList<Integer> lista2;
-	
+
 	@Before
 	public void setUp() throws Exception {
-		
+
 		getImplementations();
-		
+
 		// Lista com 3 elementos.
 		lista1.insert(3);
 		lista1.insert(2);
 		lista1.insert(1);
 
 	}
-	
-	private void getImplementations(){
-		//TODO O aluno deve ajustar aqui para instanciar sua implementação
-		lista1 = new SingleLinkedListImpl<>();
-		lista2 = new SingleLinkedListImpl<>();
+
+	private void getImplementations() {
+		// TODO O aluno deve ajustar aqui para instanciar sua implementação
+		lista1 = null;
+		lista2 = null;
 	}
 
 	@Test
@@ -52,7 +52,7 @@ public class StudentLinkedListTest {
 		lista1.insert(5);
 		lista1.insert(7);
 		Assert.assertEquals(5, lista1.size());
-		
+
 		Assert.assertEquals(0, lista2.size());
 		lista2.insert(4);
 		lista2.insert(7);
@@ -65,9 +65,11 @@ public class StudentLinkedListTest {
 		lista1.remove(2);
 		lista1.remove(1);
 		Assert.assertEquals(1, lista1.size());
-		
-		Assert.assertEquals(1, lista1.size());
+
+		Assert.assertEquals(3, lista1.size());
 		lista1.remove(4);
+		lista1.remove(2);
+		lista1.remove(1);
 		Assert.assertEquals(1, lista1.size());
 	}
 
