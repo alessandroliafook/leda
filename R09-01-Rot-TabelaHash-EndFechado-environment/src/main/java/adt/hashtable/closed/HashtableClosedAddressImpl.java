@@ -1,12 +1,15 @@
 package adt.hashtable.closed;
 
-import util.Util;
+import java.util.LinkedList;
+
 import adt.hashtable.hashfunction.HashFunction;
 import adt.hashtable.hashfunction.HashFunctionClosedAddressMethod;
+import adt.hashtable.hashfunction.HashFunctionDivisionMethod;
 import adt.hashtable.hashfunction.HashFunctionFactory;
+import adt.hashtable.hashfunction.HashFunctionMultiplicationMethod;
+import util.Util;
 
-public class HashtableClosedAddressImpl<T> extends
-		AbstractHashtableClosedAddress<T> {
+public class HashtableClosedAddressImpl<T> extends AbstractHashtableClosedAddress<T> {
 
 	/**
 	 * A hash table with closed address works with a hash function with closed
@@ -29,8 +32,7 @@ public class HashtableClosedAddressImpl<T> extends
 	 */
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public HashtableClosedAddressImpl(int desiredSize,
-			HashFunctionClosedAddressMethod method) {
+	public HashtableClosedAddressImpl(int desiredSize, HashFunctionClosedAddressMethod method) {
 		int realSize = desiredSize;
 
 		if (method == HashFunctionClosedAddressMethod.DIVISION) {
@@ -39,8 +41,7 @@ public class HashtableClosedAddressImpl<T> extends
 														// above
 		}
 		initiateInternalTable(realSize);
-		HashFunction function = HashFunctionFactory.createHashFunction(method,
-				realSize);
+		HashFunction function = HashFunctionFactory.createHashFunction(method, realSize);
 		this.hashFunction = function;
 	}
 
@@ -51,32 +52,141 @@ public class HashtableClosedAddressImpl<T> extends
 	 * prime.
 	 */
 	int getPrimeAbove(int number) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+
+		int valor = (Util.isPrime(number)) ? number : getPrimeAbove(number + 1);
+
+		return valor;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void insert(T element) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+
+		if (element == null)
+			return;
+
+		else {
+
+			int key = generateKey(element);
+
+			if (key == -1)
+				return;
+
+			else if (this.table[key] == null) {
+
+				this.table[key] = new LinkedList<T>();
+				LinkedList<T> list = (LinkedList<T>) this.table[key];
+
+				if (list.add(element))
+					super.elements++;
+
+			} else {
+
+				LinkedList<T> list = (LinkedList<T>) this.table[key];
+
+				if (list.add(element)) {
+					super.elements++;
+
+					if (list.size() > 1) {
+						super.COLLISIONS++;
+					}
+				}
+			}
+		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void remove(T element) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+
+		if (element == null)
+			return;
+
+		else {
+
+			int key = generateKey(element);
+
+			if (key == -1 || this.table[key] == null)
+				return;
+
+			else {
+
+				LinkedList<T> list = (LinkedList<T>) this.table[key];
+
+				int actualSize = list.size();
+
+				if (list.remove(element)) {
+					super.elements--;
+
+					if (list.size() <= actualSize) {
+						super.COLLISIONS--;
+					}
+				}
+			}
+		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public T search(T element) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+
+		if (element != null) {
+
+			int key = generateKey(element);
+
+			if (key != -1) {
+
+				if (this.table[key] != null) {
+
+					LinkedList<T> list = (LinkedList<T>) this.table[key];
+					
+					if (list.contains(element))
+						return element;
+				}
+			}
+		}
+
+		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public int indexOf(T element) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+
+		int index = -1;
+
+		if (element != null) {
+
+			int key = generateKey(element);
+
+			if (key != -1) {
+
+				if (this.table[key] != null) {
+
+					LinkedList<T> list = (LinkedList<T>) this.table[key];
+
+					if (list.contains(element))
+						return key;
+				}
+			}
+		}
+
+		return index;
 	}
 
+	private int generateKey(T element) {
+
+		int index = -1;
+
+		if (element != null) {
+
+			if (getHashFunction() instanceof HashFunctionDivisionMethod)
+				index = ((HashFunctionDivisionMethod<T>) getHashFunction()).hash(element);
+
+			else if (getHashFunction() instanceof HashFunctionMultiplicationMethod)
+				index = ((HashFunctionMultiplicationMethod<T>) getHashFunction()).hash(element);
+		}
+
+		return index;
+	}
 }

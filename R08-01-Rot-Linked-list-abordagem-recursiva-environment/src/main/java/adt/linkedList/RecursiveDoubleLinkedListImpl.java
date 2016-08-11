@@ -25,8 +25,8 @@ public class RecursiveDoubleLinkedListImpl<T> extends RecursiveSingleLinkedListI
 			this.setNext(new RecursiveDoubleLinkedListImpl<T>(null, null, this));
 
 		} else {
-			
-			RecursiveDoubleLinkedListImpl<T> newNode = new RecursiveDoubleLinkedListImpl<T> (getData(), getNext(), this);
+
+			RecursiveDoubleLinkedListImpl<T> newNode = new RecursiveDoubleLinkedListImpl<T>(getData(), getNext(), this);
 			setData(element);
 			setNext(newNode);
 		}
@@ -52,8 +52,7 @@ public class RecursiveDoubleLinkedListImpl<T> extends RecursiveSingleLinkedListI
 
 		else if (getNext().isEmpty()) {
 
-			setData(null);
-			setNext(null);
+			getPrevious().setNext(new RecursiveDoubleLinkedListImpl<T>());
 
 		} else {
 			RecursiveDoubleLinkedListImpl<T> nextNode = (RecursiveDoubleLinkedListImpl<T>) getNext();
@@ -71,7 +70,6 @@ public class RecursiveDoubleLinkedListImpl<T> extends RecursiveSingleLinkedListI
 
 			setData(element);
 			setNext(new RecursiveDoubleLinkedListImpl<T>(null, null, this));
-			
 
 		} else {
 
@@ -89,11 +87,19 @@ public class RecursiveDoubleLinkedListImpl<T> extends RecursiveSingleLinkedListI
 		else {
 
 			RecursiveDoubleLinkedListImpl<T> nextNode = (RecursiveDoubleLinkedListImpl<T>) getNext();
-		
+
 			if (getData().equals(element)) {
 
-				getPrevious().setNext(nextNode);
-				nextNode.setPrevious(getPrevious());
+				if (getNext().isEmpty()) {
+				
+					setData(null);
+					setNext(null);
+				
+				} else {
+
+					getPrevious().setNext(nextNode);
+					nextNode.setPrevious(getPrevious());
+				}
 
 			} else {
 
@@ -104,6 +110,7 @@ public class RecursiveDoubleLinkedListImpl<T> extends RecursiveSingleLinkedListI
 
 	public RecursiveDoubleLinkedListImpl<T> getPrevious() {
 		return previous;
+		
 	}
 
 	public void setPrevious(RecursiveDoubleLinkedListImpl<T> previous) {
