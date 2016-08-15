@@ -19,16 +19,16 @@ public class StudentTestHashtableOpenAddressLinearProbing {
 
 	@Before
 	public void setUp() throws Exception {
-		table1 = new HashtableOpenAddressLinearProbingImpl<HashtableElement>(
-				PROPOSED_SIZE, HashFunctionClosedAddressMethod.DIVISION);
+		table1 = new HashtableOpenAddressLinearProbingImpl<HashtableElement>(PROPOSED_SIZE,
+				HashFunctionClosedAddressMethod.DIVISION);
 		// o tamanho real utilizado vai ser PROPOSED_SIZE
 		table1.insert(new HashtableElement(2)); // coloca no slot indexado com 2
 		table1.insert(new HashtableElement(3)); // coloca no slot indexado com 3
 		table1.insert(new HashtableElement(4)); // coloca no slot indexado com 4
 		table1.insert(new HashtableElement(5)); // coloca no slot indexado com 5
 
-		table2 = new HashtableOpenAddressLinearProbingImpl<HashtableElement>(
-				PROPOSED_SIZE, HashFunctionClosedAddressMethod.DIVISION);
+		table2 = new HashtableOpenAddressLinearProbingImpl<HashtableElement>(PROPOSED_SIZE,
+				HashFunctionClosedAddressMethod.DIVISION);
 	}
 
 	@Test
@@ -47,6 +47,7 @@ public class StudentTestHashtableOpenAddressLinearProbing {
 		table1.insert(new HashtableElement(12)); // produz colisao com o 2.
 													// coloca no slot indexado
 													// com 6 (prox disponivel)
+
 		assertEquals(6, table1.indexOf(new HashtableElement(12)));
 		assertEquals(4, table1.getCOLLISIONS());
 
@@ -62,6 +63,14 @@ public class StudentTestHashtableOpenAddressLinearProbing {
 		table1.remove(new HashtableElement(12)); // elemento inexistente
 		assertEquals(4, table1.size());
 
+		table1.insert(new HashtableElement(12)); // produz colisao com o 2.
+												// coloca no slot indexado
+												// com 6 (prox disponivel)
+		
+		assertEquals(4, table1.getCOLLISIONS());
+		table1.remove(new HashtableElement(12)); // Zerar colisões
+		assertEquals(0, table1.getCOLLISIONS());
+		
 		table1.remove(new HashtableElement(5)); // elemento existente
 		assertEquals(3, table1.size());
 		assertNull(table1.search(new HashtableElement(5)));
@@ -70,8 +79,9 @@ public class StudentTestHashtableOpenAddressLinearProbing {
 
 	@Test
 	public void testSearch() {
-		assertEquals(new HashtableElement(5),
-				table1.search(new HashtableElement(5))); // elemento que existe
+		assertEquals(new HashtableElement(5), table1.search(new HashtableElement(5))); // elemento
+																						// que
+																						// existe
 		assertNull(table1.search(new HashtableElement(15))); // elemento que nao
 																// existe
 	}
@@ -85,6 +95,8 @@ public class StudentTestHashtableOpenAddressLinearProbing {
 		table1.remove(new HashtableElement(5));
 		assertTrue(table1.isEmpty());
 
+		table1.remove(new HashtableElement(5));
+		
 		assertTrue(table2.isEmpty());
 	}
 
