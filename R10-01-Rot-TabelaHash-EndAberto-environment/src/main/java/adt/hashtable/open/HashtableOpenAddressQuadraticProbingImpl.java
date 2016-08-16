@@ -16,7 +16,7 @@ public class HashtableOpenAddressQuadraticProbingImpl<T extends Storable>
 	@Override
 	public void insert(T element) {
 
-		if (element == null && indexOf(element) != -1) {
+		if (element == null || indexOf(element) != -1) {
 			return;
 
 		} else if (isFull()) {
@@ -25,7 +25,7 @@ public class HashtableOpenAddressQuadraticProbingImpl<T extends Storable>
 		} else {
 
 			int probe = 0;
-			int index = ((HashFunctionQuadraticProbing<T>) hashFunction).hash(element, probe);
+			int index = getIndex(element, probe);
 
 			if (isNull(index) || isDeleted(index)) {
 				super.table[index] = element;
@@ -59,22 +59,22 @@ public class HashtableOpenAddressQuadraticProbingImpl<T extends Storable>
 
 		} else {
 
-			int firstIndex = ((HashFunctionQuadraticProbing<T>) hashFunction).hash(element, 0);
-			int prob = 0;
+			int firstIndex = getIndex(element, 0);
+			int probe = 0;
 
 			if (index != firstIndex) {
 
-				int auxIndex = ((HashFunctionQuadraticProbing<T>) hashFunction).hash(element, prob);
+				int auxIndex = getIndex(element, probe);
 
 				while (auxIndex != index) {
-					auxIndex = ((HashFunctionQuadraticProbing<T>) hashFunction).hash(element, ++prob);
+					auxIndex = getIndex(element, ++probe);
 
 				}
 			}
 
 			super.table[index] = deletedElement;
 			super.elements--;
-			super.COLLISIONS = super.COLLISIONS - prob;
+			super.COLLISIONS = super.COLLISIONS - probe;
 		}
 	}
 
@@ -103,7 +103,7 @@ public class HashtableOpenAddressQuadraticProbingImpl<T extends Storable>
 		}
 
 		int probe = 0;
-		int index = ((HashFunctionQuadraticProbing<T>) hashFunction).hash(element, probe);
+		int index = getIndex(element, probe);
 
 		if (isNull(index)) {
 			return -1;
@@ -114,10 +114,10 @@ public class HashtableOpenAddressQuadraticProbingImpl<T extends Storable>
 		} else {
 
 			int firstIndex = index;
-			index = ((HashFunctionQuadraticProbing<T>) hashFunction).hash(element, ++probe);
+			index = getIndex(element, ++probe);
 
 			while (!isNull(index) && !isEquals(element, index) && index != firstIndex) {
-				index = ((HashFunctionQuadraticProbing<T>) hashFunction).hash(element, probe++);
+				index = getIndex(element, probe++);
 			}
 
 			if (index == firstIndex || isNull(index)) {
@@ -130,6 +130,8 @@ public class HashtableOpenAddressQuadraticProbingImpl<T extends Storable>
 			}
 		}
 	}
+
+	//  metodos auxiliares
 
 	private boolean isEquals(T element, int index) {
 		return super.table[index].equals(element);
@@ -148,4 +150,11 @@ public class HashtableOpenAddressQuadraticProbingImpl<T extends Storable>
 		return super.table[index] == null;
 	}
 
+	private int getIndex(T element, int probe) {
+		return ((HashFunctionQuadraticProbing<T>) hashFunction).hash(element, probe);
+	}
 }
+
+
+
+
