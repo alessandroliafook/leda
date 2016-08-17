@@ -72,7 +72,6 @@ public class HashtableOpenAddressLinearProbingImpl<T extends Storable> extends A
 
 			super.table[index] = deletedElement;
 			super.elements--;
-			super.COLLISIONS = super.COLLISIONS - probe;
 		}
 	}
 

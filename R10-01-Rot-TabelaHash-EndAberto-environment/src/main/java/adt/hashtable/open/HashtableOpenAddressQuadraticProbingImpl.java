@@ -74,7 +74,6 @@ public class HashtableOpenAddressQuadraticProbingImpl<T extends Storable>
 
 			super.table[index] = deletedElement;
 			super.elements--;
-			super.COLLISIONS = super.COLLISIONS - probe;
 		}
 	}
 

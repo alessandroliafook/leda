@@ -63,7 +63,7 @@ public class StudentTestHashtableOpenAddressLinearProbing {
         assertEquals(6, table1.indexOf(new HashtableElement(12)));
         assertEquals(4, table1.getCOLLISIONS());
         table1.remove(new HashtableElement(12));
-        assertEquals(0, table1.getCOLLISIONS());
+        assertEquals(4, table1.getCOLLISIONS());
 
         assertEquals(6, table1.size());
         table1.remove(new HashtableElement(9));
@@ -120,7 +120,7 @@ public class StudentTestHashtableOpenAddressLinearProbing {
 
 		assertEquals(4, table1.getCOLLISIONS());
 		table1.remove(new HashtableElement(12)); // Zerar colisões
-		assertEquals(0, table1.getCOLLISIONS());
+		assertEquals(4, table1.getCOLLISIONS());
 
 		table1.remove(new HashtableElement(5)); // elemento existente
 		assertEquals(3, table1.size());
