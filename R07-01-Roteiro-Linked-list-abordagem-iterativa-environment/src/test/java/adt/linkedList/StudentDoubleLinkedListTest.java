@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class StudentDoubleLinkedListTest extends StudentLinkedListTest{
+public class StudentDoubleLinkedListTest {
 	
 	private DoubleLinkedList<Integer> lista1;
 	private DoubleLinkedList<Integer> lista2;
@@ -102,4 +102,5 @@ public class StudentDoubleLinkedListTest extends StudentLinkedListTest{
 		Assert.assertArrayEquals(new Integer[] {}, lista2.toArray());
 		Assert.assertArrayEquals(new Integer[] { 3, 2, 1 }, lista1.toArray());
 	}
+	
 }
