@@ -62,7 +62,9 @@ public class HashtableClosedAddressImpl<T> extends AbstractHashtableClosedAddres
 	@Override
 	public void insert(T element) {
 
-		if (element == null)
+		T elementListed = search(element);
+		
+		if (element == null || elementListed != null)
 			return;
 
 		else {
