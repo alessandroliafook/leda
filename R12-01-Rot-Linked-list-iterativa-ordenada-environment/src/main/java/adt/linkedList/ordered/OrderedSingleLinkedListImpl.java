@@ -16,15 +16,15 @@ import adt.linkedList.SingleLinkedListNode;
  *
  * @param <T>
  */
-public class OrderedSingleLinkedListImpl<T> extends SingleLinkedListImpl<T> implements
-		OrderedLinkedList<T> {
+public class OrderedSingleLinkedListImpl<T> extends SingleLinkedListImpl<T>
+		implements OrderedLinkedList<T> {
 
-	private Comparator<T> comparator;
+	protected Comparator<T> comparator;
 
+	@SuppressWarnings("unchecked")
 	public OrderedSingleLinkedListImpl() {
-		// TODO Auto-generated constructor stub
-		throw new UnsupportedOperationException(
-				"Default constructor is not working yet!");
+
+		comparator = (T o1, T o2) -> ((Comparable<T>) o1).compareTo(o2);
 	}
 
 	public OrderedSingleLinkedListImpl(Comparator<T> comparator) {
@@ -32,22 +32,106 @@ public class OrderedSingleLinkedListImpl<T> extends SingleLinkedListImpl<T> impl
 	}
 
 	@Override
+	public void insert(T element) {
+
+		if (element == null)
+			return;
+
+		else if (isEmpty()) {
+
+			SingleLinkedListNode<T> newHead = new SingleLinkedListNode<T>(element, NILL);
+			setHead(newHead);
+			super.size++;
+
+		} else if (comparator.compare(head.getData(), element) >= 0) {
+
+			SingleLinkedListNode<T> newHead = new SingleLinkedListNode<T>(element, getHead());
+			setHead(newHead);
+			super.size++;
+
+		} else {
+
+			SingleLinkedListNode<T> auxNode = getHead();
+
+			while (!auxNode.getNext().isNIL() && comparator.compare(auxNode.getNext().getData(), element) <= 0) {
+				auxNode = auxNode.getNext();
+			}
+
+			SingleLinkedListNode<T> nextNode = (auxNode.getNext().isNIL()) ? new SingleLinkedListNode<T>(element, NILL)
+					: new SingleLinkedListNode<T>(element, auxNode.getNext());
+
+			auxNode.setNext(nextNode);
+			super.size++;
+		}
+	}
+
+	@Override
 	public T minimum() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		
+		if(isEmpty())
+			return null;
+		
+		else if(size() == 1)
+			return getHead().getData();
+		
+		else if(comparator.compare(getHead().getData(), getHead().getNext().getData()) < 0)
+			return getHead().getData();
+		
+		else {
+			
+			SingleLinkedListNode<T> node = getHead();
+			
+			while(! node.getNext().isNIL() && comparator.compare(node.getData(), node.getNext().getData()) <= 0){
+				node = node.getNext();
+			}
+			
+			return node.getData();
+		}
 	}
 
 	@Override
 	public T maximum() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		
+		if(isEmpty())
+			return null;
+		
+		else if(size() == 1)
+			return getHead().getData();
+		
+		else if(comparator.compare(getHead().getData(), getHead().getNext().getData()) > 0)
+			return getHead().getData();
+		
+		else {
+			
+			SingleLinkedListNode<T> node = getHead();
+			
+			while(! node.getNext().isNIL() && comparator.compare(node.getData(), node.getNext().getData()) <= 0){
+				node = node.getNext();
+			}
+			
+			return node.getData();
+		}
 	}
 
 	public Comparator<T> getComparator() {
 		return comparator;
 	}
 
+	protected void clear() {
+
+		this.setHead(NILL);
+		setSize(0);
+	}
+
 	public void setComparator(Comparator<T> comparator) {
+
 		this.comparator = comparator;
+
+		T[] array = this.toArray();
+		clear();
+
+		for (T element : array) {
+			insert(element);
+		}
 	}
 }
