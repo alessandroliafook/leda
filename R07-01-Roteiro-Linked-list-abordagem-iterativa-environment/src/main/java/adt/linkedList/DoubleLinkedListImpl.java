@@ -15,11 +15,19 @@ public class DoubleLinkedListImpl<T> extends SingleLinkedListImpl<T> implements 
 
 		if (element == null)
 			return;
+		
+		else if(isEmpty()) {
+
+			DoubleLinkedListNode<T> newHead = new DoubleLinkedListNode<T>(element, this.NILL, this.NILL);
+			setHead(newHead);
+			setLast(newHead);
+			super.size++;
+
 			
-		else {
+		} else {
 
 			DoubleLinkedListNode<T> oldHead = (DoubleLinkedListNode<T>) getHead();
-			DoubleLinkedListNode<T> newHead = new DoubleLinkedListNode<T>(element, NILL, oldHead);
+			DoubleLinkedListNode<T> newHead = new DoubleLinkedListNode<T>(element, oldHead, NILL);
 
 			oldHead.setPrevious(newHead);
 			setHead(newHead);
@@ -41,14 +49,10 @@ public class DoubleLinkedListImpl<T> extends SingleLinkedListImpl<T> implements 
 	@Override
 	public void removeLast() {
 
-		DoubleLinkedListNode<T> auxNode = (DoubleLinkedListNode<T>) getHead();
-
-		while (!auxNode.getNext().equals(NILL)) {
-			auxNode = (DoubleLinkedListNode<T>) auxNode.getNext();
-		}
-
-		DoubleLinkedListNode<T> node = auxNode.getPrevious();
-		node.setNext(NILL);
+		DoubleLinkedListNode<T> newLast = (DoubleLinkedListNode<T>) getLast().getPrevious();
+		setLast(newLast);
+		getLast().setNext(this.NILL);
+		super.size--;
 	}
 
 	@Override
@@ -62,14 +66,11 @@ public class DoubleLinkedListImpl<T> extends SingleLinkedListImpl<T> implements 
 
 		} else {
 
-			DoubleLinkedListNode<T> auxNode = (DoubleLinkedListNode<T>) getHead();
-
-			while (!auxNode.getNext().equals(NILL)) {
-				auxNode = (DoubleLinkedListNode<T>) auxNode.getNext();
-			}
-
-			DoubleLinkedListNode<T> newNode = new DoubleLinkedListNode<T>(element, auxNode, NILL);
+			DoubleLinkedListNode<T> auxNode = (DoubleLinkedListNode<T>) getLast();
+			DoubleLinkedListNode<T> newNode = new DoubleLinkedListNode<T>(element, NILL, auxNode);
+			
 			auxNode.setNext(newNode);
+			setLast(newNode);
 			super.size++;
 		}
 	}
@@ -91,6 +92,7 @@ public class DoubleLinkedListImpl<T> extends SingleLinkedListImpl<T> implements 
 
 				DoubleLinkedListNode<T> previousNode = (DoubleLinkedListNode<T>) node.getPrevious();
 				DoubleLinkedListNode<T> nextNode = (DoubleLinkedListNode<T>) node.getNext();
+				
 				previousNode.setNext(nextNode);
 				nextNode.setPrevious(previousNode);
 				super.size--;
