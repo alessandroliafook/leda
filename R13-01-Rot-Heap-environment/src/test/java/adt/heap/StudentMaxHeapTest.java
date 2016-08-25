@@ -29,6 +29,9 @@ public class StudentMaxHeapTest {
 
 	@Test
 	public void testBuild() {
+		assertEquals(0, heap.size());
+		assertTrue(heap.isEmpty());
+		
 		heap.buildHeap(new Integer[] { 82, 6, 99, 12, 34, 64, 58, 1 });
 
 		assertEquals(8, heap.size());
@@ -39,16 +42,17 @@ public class StudentMaxHeapTest {
 
 	@Test
 	public void testInsert() {
-		heap.insert(8);
-		heap.insert(12);
-		heap.insert(-2);
-		heap.insert(7);
-		heap.insert(8);
-		heap.insert(-5);
-		heap.insert(14);
-		heap.insert(3);
-		heap.insert(-10);
-		heap.insert(0);
+
+		assertEquals(0, heap.size());
+		assertTrue(heap.isEmpty());
+		
+		Integer[] list = new Integer[] { 8, 12, -2, 7, 8, -5, 14, 3, -10, 0 }; 
+		
+		for (int i = 0; i < list.length; i++){
+			assertEquals(i, heap.size());
+			heap.insert(list[i]);
+			assertEquals(i + 1, heap.size());
+		}
 
 		assertEquals(10, heap.size());
 		assertFalse(heap.isEmpty());
