@@ -165,7 +165,7 @@ public class AVLTreeImpl<T extends Comparable<T>> extends BSTImpl<T> implements 
          return;
 
       BSTNode<T> parent = (BSTNode<T>) node.getParent();
-      this.rebalance(parent);
+      this.rebalance(node);
       rebalanceUp(parent);
    }
 
@@ -180,12 +180,18 @@ public class AVLTreeImpl<T extends Comparable<T>> extends BSTImpl<T> implements 
          BSTNode<T> left = (BSTNode<T>) node.getLeft();
 
          Util.rightRotation(left);
-         Util.leftRotation(node);
+         BSTNode<T> newNode =  Util.leftRotation(node);
+         
+         if(node.equals(this.getRoot()))
+        	 this.setRoot(newNode);
       }
 
-      else
-         Util.leftRotation(node);
-
+      else {
+         BSTNode<T> newNode = Util.leftRotation(node);
+         
+         if(node.equals(this.getRoot()))
+        	 this.setRoot(newNode);
+      }
    }
 
    // AUXILIARY
@@ -199,11 +205,19 @@ public class AVLTreeImpl<T extends Comparable<T>> extends BSTImpl<T> implements 
          BSTNode<T> right = (BSTNode<T>) node.getRight();
 
          Util.leftRotation(right);
-         Util.rightRotation(node);
+         BSTNode<T> newNode = Util.rightRotation(node);
+
+         if(node.equals(this.getRoot()))
+        	 this.setRoot(newNode);
+
       }
 
-      else
-         Util.rightRotation(node);
+      else {
+          BSTNode<T> newNode = Util.rightRotation(node);
+
+          if(node.equals(this.getRoot()))
+         	 this.setRoot(newNode);
+      }
 
    }
 }
