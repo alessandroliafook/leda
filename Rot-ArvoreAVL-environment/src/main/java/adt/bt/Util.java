@@ -22,9 +22,14 @@ public class Util {
 
 				right.setParent(parent);
 
-				if(parent != null)
-					parent.setRight(right);
-				
+				if(parent != null) {
+					if(parent.getLeft().equals(node))
+						parent.setLeft(right);
+
+					else
+						parent.setRight(right);
+				}
+
 				if (!right.getLeft().isEmpty())
 					node.setRight(right.getLeft());
 
@@ -55,9 +60,17 @@ public class Util {
 
 				left.setParent(parent);
 
-				if(parent != null)
-					parent.setLeft(left);
-				
+				if(parent != null) {
+
+					if(parent != null) {
+						if(parent.getLeft().equals(node))
+							parent.setLeft(left);
+
+						else
+							parent.setRight(left);
+					}
+				}
+
 				if (!left.getRight().isEmpty())
 					node.setRight(left.getLeft());
 

@@ -145,17 +145,12 @@ public class AVLTreeImpl<T extends Comparable<T>> extends BSTImpl<T> implements 
 
       int balance = this.calculateBalance(node);
 
-      if (balance >= -1 && balance <= 1)
-         return;
-
-      else if (balance > 1)
+      if (balance > 1)
          leftRotation(node);
 
       else if (balance < -1)
          rightRotation(node);
 
-      rebalance(left);
-      rebalance(right);
    }
 
    // AUXILIARY
@@ -175,23 +170,16 @@ public class AVLTreeImpl<T extends Comparable<T>> extends BSTImpl<T> implements 
       if (node == null || node.isEmpty())
          return;
 
-      else if (node.getRight().isEmpty() && !node.getLeft().isEmpty()) {
+      BSTNode<T> aux = (BSTNode<T>) node.getRight();
+      int balance = calculateBalance(aux);
 
-         BSTNode<T> left = (BSTNode<T>) node.getLeft();
+      if (balance < 0)
+         Util.rightRotation(aux);
 
-         Util.rightRotation(left);
-         BSTNode<T> newNode =  Util.leftRotation(node);
-         
+      BSTNode newNode = Util.leftRotation(node);
+
          if(node.equals(this.getRoot()))
         	 this.setRoot(newNode);
-      }
-
-      else {
-         BSTNode<T> newNode = Util.leftRotation(node);
-         
-         if(node.equals(this.getRoot()))
-        	 this.setRoot(newNode);
-      }
    }
 
    // AUXILIARY
@@ -200,24 +188,15 @@ public class AVLTreeImpl<T extends Comparable<T>> extends BSTImpl<T> implements 
       if (node == null || node.isEmpty())
          return;
 
-      else if (!node.getRight().isEmpty() && node.getLeft().isEmpty()) {
+      BSTNode<T> aux = (BSTNode<T>) node.getLeft();
+      int balance = calculateBalance(aux);
 
-         BSTNode<T> right = (BSTNode<T>) node.getRight();
+      if (balance > 0)
+         Util.leftRotation(aux);
 
-         Util.leftRotation(right);
-         BSTNode<T> newNode = Util.rightRotation(node);
+      BSTNode newNode = Util.rightRotation(node);
 
-         if(node.equals(this.getRoot()))
-        	 this.setRoot(newNode);
-
-      }
-
-      else {
-          BSTNode<T> newNode = Util.rightRotation(node);
-
-          if(node.equals(this.getRoot()))
-         	 this.setRoot(newNode);
-      }
-
+      if (node.equals(this.getRoot()))
+         this.setRoot(newNode);
    }
 }
