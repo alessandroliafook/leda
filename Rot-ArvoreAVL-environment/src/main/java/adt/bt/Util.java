@@ -68,7 +68,7 @@ public class Util {
             if (node.getLeft() != null)
                 node.getLeft().setParent(node);
 
-            left.setRight(node);git 
+            left.setRight(node);
             node.setParent(left);
 
             return (BSTNode<T>) left;

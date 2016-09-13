@@ -2,6 +2,7 @@ package adt.avltree;
 
 import static org.junit.Assert.*;
 
+import adt.bt.BTNode;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Before;
@@ -206,9 +207,6 @@ public class StudentAVLTest2 {
 			cont--;
 
 		}
-
-
-
 	}
 
 	private void assertBalance(BSTNode<Integer> node, AVLTreeImpl<Integer> tree) throws Exception {
@@ -261,6 +259,13 @@ public class StudentAVLTest2 {
 		Assert.assertEquals(avl.height(), 1);
 		Assert.assertEquals(avl.size(), 3);
 
+	}
+
+	@Test
+	public void testCalculateBalanceEmptyTree(){
+
+		AVLTreeImpl<Integer> avl2 = (AVLTreeImpl<Integer>) avl;
+		Assert.assertEquals(0, avl2.calculateBalance(avl2.getRoot()));
 	}
 
 }
