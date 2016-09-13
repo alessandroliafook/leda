@@ -2,201 +2,161 @@ package adt.avltree;
 
 import adt.bst.BSTImpl;
 import adt.bst.BSTNode;
+import adt.bt.BTNode;
 import adt.bt.Util;
 
 /**
- * 
  * Performs consistency validations within a AVL Tree instance
- * 
- * @author Claudio Campelo
  *
  * @param <T>
+ * @author Claudio Campelo
  */
 public class AVLTreeImpl<T extends Comparable<T>> extends BSTImpl<T> implements AVLTree<T> {
 
-   // TODO Do not forget: you must override the methods insert and remove
-   // conveniently.
+    // TODO Do not forget: you must override the methods insert and remove
+    // conveniently.
 
-   @Override
-   public void insert(T element) {
+    @Override
+    public void insertRecursive(T element, BTNode<T> node) {
 
-      if (element == null)
-         return;
+        if (node.isEmpty()) {
 
-      else
-         this.insertRecursive(super.getRoot(), element);
-   }
+            node.setData(element);
 
-   protected void insertRecursive(BSTNode<T> node, T element) {
+            BSTNode<T> newLeft = new BSTNode<T>();
+            newLeft.setParent(node);
+            node.setLeft(newLeft);
 
-      if (node.isEmpty()) {
+            BSTNode<T> newRight = new BSTNode<T>();
+            newRight.setParent(node);
+            node.setRight(newRight);
 
-         node.setData(element);
+        } else if (node.getData().compareTo(element) > 0) {
+            insertRecursive(element, node.getLeft());
 
-         BSTNode<T> newLeft = new BSTNode<T>();
-         newLeft.setParent(node);
-         node.setLeft(newLeft);
+        } else if (node.getData().compareTo(element) < 0) {
+            insertRecursive(element, node.getRight());
+        }
+        rebalance((BSTNode<T>) node);
+    }
 
-         BSTNode<T> newRight = new BSTNode<T>();
-         newRight.setParent(node);
-         node.setRight(newRight);
+    @Override
+    public void removeRecursive(BTNode<T> node) {
 
-      }
+        if (node.isLeaf()) {
+            node.setData(null);
+            node.setRight(null);
+            node.setLeft(null);
 
-      else if (node.getData().compareTo(element) > 0)
-         this.insertRecursive((BSTNode<T>) node.getLeft(), element);
+        } else {
 
-      else if (node.getData().compareTo(element) < 0)
-         this.insertRecursive((BSTNode<T>) node.getRight(), element);
+            BTNode<T> auxNode;
 
-      this.rebalance(node);
-   }
+            if (!node.getLeft().isEmpty() && !node.getRight().isEmpty()) {
 
-   @Override
-   public void remove(T element) {
+                auxNode = sucessor(node.getData());
+                node.setData(auxNode.getData());
+                removeRecursive(auxNode);
 
-      if (element == null)
-         return;
+            } else if (node.getLeft().isEmpty()) {
 
-      BSTNode<T> node = super.search(element);
+                auxNode = node.getRight();
+                node.setData(auxNode.getData());
+                node.setLeft(auxNode.getLeft());
+                node.getLeft().setParent(node);
+                node.setRight(auxNode.getRight());
+                node.getRight().setParent(node);
 
-      this.removeRecursive(node);
-   }
+            } else if (node.getRight().isEmpty()) {
 
-   protected void removeRecursive(BSTNode<T> node) {
+                auxNode = node.getLeft();
+                node.setData(auxNode.getData());
+                node.setLeft(auxNode.getLeft());
+                node.getLeft().setParent(node);
+                node.setRight(auxNode.getRight());
+                node.getRight().setParent(node);
+            }
+        }
+        rebalanceUp((BSTNode<T>) node);
+    }
 
-      if (node.isEmpty())
-         return;
+    // AUXILIARY
+    protected int calculateBalance(BTNode<T> node) {
 
-      else if (node.isLeaf()) {
+        if (node.isEmpty())
+            return 0;
 
-         node.setData(null);
-         this.rebalanceUp(node);
-      }
-
-      else if (!node.getLeft().isEmpty() && !node.getRight().isEmpty()) {
-
-         BSTNode<T> sucessor = super.sucessor(node.getData());
-         node.setData(sucessor.getData());
-         this.removeRecursive(sucessor);
-      }
-
-      else {
-
-         if (node.getLeft().isEmpty()) {
-
-            BSTNode<T> aux = (BSTNode<T>) node.getRight();
-
-            node.setData(aux.getData());
-            node.setRight(aux.getRight());
-            node.setLeft(aux.getLeft());
+        else {
 
             BSTNode<T> right = (BSTNode<T>) node.getRight();
-            right.setParent(node);
-
             BSTNode<T> left = (BSTNode<T>) node.getLeft();
-            left.setParent(node);
-         }
 
-         else {
+            int balance = super.heightRecursive(right) - super.heightRecursive(left);
 
-            BSTNode<T> aux = (BSTNode<T>) node.getLeft();
+            return balance;
+        }
+    }
 
-            node.setData(aux.getData());
-            node.setRight(aux.getRight());
-            node.setLeft(aux.getLeft());
+    // AUXILIARY
+    protected void rebalance(BSTNode<T> node) {
 
-            BSTNode<T> right = (BSTNode<T>) node.getRight();
-            right.setParent(node);
+        if (node != null && !node.isEmpty()) {
 
-            BSTNode<T> left = (BSTNode<T>) node.getLeft();
-            left.setParent(node);
-         }
+            int balance = calculateBalance(node);
 
-         rebalanceUp(node);
-      }
-   }
+            if (balance > 1) {
+                leftRotation(node);
 
-   // AUXILIARY
-   protected int calculateBalance(BSTNode<T> node) {
+            } else if (balance < -1) {
+                rightRotation(node);
+            }
+        }
 
-      if (node.isEmpty())
-         return 0;
+    }
 
-      else {
+    // AUXILIARY
+    protected void rebalanceUp(BSTNode<T> node) {
 
-         BSTNode<T> right = (BSTNode<T>) node.getRight();
-         BSTNode<T> left = (BSTNode<T>) node.getLeft();
+        if (node != null) {
 
-         int balance = super.nodeHeight(right) - super.nodeHeight(left);
+            BSTNode<T> parent = (BSTNode<T>) node.getParent();
+            rebalance(node);
+            rebalanceUp(parent);
+        }
+    }
 
-         return balance;
-      }
-   }
+    // AUXILIARY
+    protected void leftRotation(BSTNode<T> node) {
 
-   // AUXILIARY
-   protected void rebalance(BSTNode<T> node) {
+        if (node != null && !node.isEmpty()) {
 
-      if (node.isEmpty())
-         return;
+            int balance = calculateBalance(node.getRight());
 
-      BSTNode<T> left = (BSTNode<T>) node.getLeft();
-      BSTNode<T> right = (BSTNode<T>) node.getRight();
+            if (balance < 0) {
+                Util.rightRotation((BSTNode<T>) node.getRight());
+            }
 
-      int balance = this.calculateBalance(node);
+            BTNode aux = Util.leftRotation(node);
+            if (node.equals(getRoot()))
+                setRoot((BSTNode<T>) aux);
+        }
+    }
 
-      if (balance > 1)
-         leftRotation(node);
+    // AUXILIARY
+    protected void rightRotation(BSTNode<T> node) {
 
-      else if (balance < -1)
-         rightRotation(node);
+        if (node != null && !node.isEmpty()) {
 
-   }
+            int balance = calculateBalance(node.getLeft());
 
-   // AUXILIARY
-   protected void rebalanceUp(BSTNode<T> node) {
+            if (balance > 0) {
+                Util.leftRotation((BSTNode<T>) node.getLeft());
+            }
 
-      if (node == null || node.isEmpty() || node.getParent() == null || node.getParent().isEmpty())
-         return;
-
-      BSTNode<T> parent = (BSTNode<T>) node.getParent();
-      this.rebalance(node);
-      rebalanceUp(parent);
-   }
-
-   // AUXILIARY
-   protected void leftRotation(BSTNode<T> node) {
-
-      if (node == null || node.isEmpty())
-         return;
-
-      BSTNode<T> aux = (BSTNode<T>) node.getRight();
-      int balance = calculateBalance(aux);
-
-      if (balance < 0)
-         Util.rightRotation(aux);
-
-      BSTNode newNode = Util.leftRotation(node);
-
-         if(node.equals(this.getRoot()))
-        	 this.setRoot(newNode);
-   }
-
-   // AUXILIARY
-   protected void rightRotation(BSTNode<T> node) {
-
-      if (node == null || node.isEmpty())
-         return;
-
-      BSTNode<T> aux = (BSTNode<T>) node.getLeft();
-      int balance = calculateBalance(aux);
-
-      if (balance > 0)
-         Util.leftRotation(aux);
-
-      BSTNode newNode = Util.rightRotation(node);
-
-      if (node.equals(this.getRoot()))
-         this.setRoot(newNode);
-   }
+            BTNode aux = Util.rightRotation(node);
+            if (node.equals(getRoot()))
+                setRoot((BSTNode<T>) aux);
+        }
+    }
 }
+

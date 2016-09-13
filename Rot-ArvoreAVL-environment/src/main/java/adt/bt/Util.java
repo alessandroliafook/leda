@@ -4,84 +4,77 @@ import adt.bst.BSTNode;
 
 public class Util {
 
-	/**
-	 * A rotacao a esquerda em node deve subir o seu filho a direita e
-	 * retorna-lo em seguida
-	 * 
-	 * @param node
-	 * @return the right node or null if the right son of the node is empty or null. 
-	 */
-	public static <T extends Comparable<T>> BSTNode<T> leftRotation(BSTNode<T> node) {
+    /**
+     * A rotacao a esquerda em node deve subir o seu filho a direita e
+     * retorna-lo em seguida
+     *
+     * @param node
+     * @return the right node or null if the right son of the node is empty or null.
+     */
+    public static <T extends Comparable<T>> BSTNode<T> leftRotation(BSTNode<T> node) {
 
-		if (node != null && !node.isEmpty()) {
+        if (node != null && !node.isEmpty()) {
 
-			BSTNode<T> right = (BSTNode<T>) node.getRight();
-			BSTNode<T> parent = (BSTNode<T>) node.getParent();
+            BTNode<T> parent = node.getParent();
+            BTNode<T> right = node.getRight();
 
-			if (right != null && !right.isEmpty()) {
+            right.setParent(parent);
+            if (parent != null) {
 
-				right.setParent(parent);
+                if(parent.getRight().equals(node))
+                    parent.setRight(right);
 
-				if(parent != null) {
-					if(parent.getLeft().equals(node))
-						parent.setLeft(right);
+                else
+                    parent.setLeft(right);
+            }
 
-					else
-						parent.setRight(right);
-				}
+            node.setRight(right.getLeft());
+            if (node.getRight() != null)
+                node.getRight().setParent(node);
 
-				if (!right.getLeft().isEmpty())
-					node.setRight(right.getLeft());
+            right.setLeft(node);
+            node.setParent(right);
 
-				right.setLeft(node);
-				node.setParent(right);
-			}
+            return (BSTNode<T>) right;
+        }
+        return null;
+    }
 
-			return right;
-		}
+    /**
+     * A rotacao a direita em node deve subir seu filho a esquerda s retorna-lo
+     * em seguida
+     *
+     * @param node
+     * @return
+     */
+    public static <T extends Comparable<T>> BSTNode<T> rightRotation(BSTNode<T> node) {
 
-		return null;
-	}
+        if (node != null && !node.isEmpty()) {
 
-	/**
-	 * A rotacao a direita em node deve subir seu filho a esquerda s retorna-lo
-	 * em seguida
-	 * 
-	 * @param node
-	 * @return
-	 */
-	public static <T extends Comparable<T>> BSTNode<T> rightRotation(BSTNode<T> node) {
-		if (node != null && !node.isEmpty()) {
+            BTNode<T> parent = node.getParent();
+            BTNode<T> left = node.getLeft();
 
-			BSTNode<T> left= (BSTNode<T>) node.getLeft();
-			BSTNode<T> parent = (BSTNode<T>) node.getParent();
+            left.setParent(parent);
+            if (parent != null) {
 
-			if (left != null && !left.isEmpty()) {
+                if (parent.getLeft().equals(node))
+                    parent.setLeft(left);
 
-				left.setParent(parent);
+                else
+                    parent.setRight(left);
+            }
 
-				if(parent != null) {
+            node.setLeft(left.getRight());
+            if (node.getLeft() != null)
+                node.getLeft().setParent(node);
 
-					if(parent != null) {
-						if(parent.getLeft().equals(node))
-							parent.setLeft(left);
+            left.setLeft(node);
+            node.setParent(left);
 
-						else
-							parent.setRight(left);
-					}
-				}
+            return (BSTNode<T>) left;
+        }
+        return null;
+    }
 
-				if (!left.getRight().isEmpty())
-					node.setRight(left.getLeft());
-
-				left.setRight(node);
-				node.setParent(left);
-			}
-
-			return left;
-		}
-
-		return null;
-	}
 
 }

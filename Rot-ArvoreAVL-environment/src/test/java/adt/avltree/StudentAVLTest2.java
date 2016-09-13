@@ -214,8 +214,8 @@ public class StudentAVLTest2 {
 
 		if(node.isEmpty()) return;
 
-		int left = tree.nodeHeight((BSTNode<Integer>) node.getLeft());
-		int right = tree.nodeHeight((BSTNode<Integer>) node.getRight());
+		int left = tree.heightRecursive(node.getLeft());
+		int right = tree.heightRecursive(node.getRight());
 
 		if(left == -1) left = 0;
 		if(right == -1) right = 0;
