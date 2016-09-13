@@ -2,6 +2,7 @@ package adt.avltree;
 
 import static org.junit.Assert.*;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Before;
 
@@ -229,4 +230,37 @@ public class StudentAVLTest2 {
 		assertBalance((BSTNode<Integer>) node.getLeft(), tree);
 		assertBalance((BSTNode<Integer>) node.getRight(), tree);
 	}
+
+	@Test
+	public void testSimples(){
+
+		avl.insert(new Integer(1));
+		avl.insert(new Integer(2));
+		avl.insert(new Integer(3));
+		Assert.assertEquals(avl.getRoot().getData(), new Integer(2));
+		Assert.assertEquals(avl.getRoot().getLeft().getData(), new Integer(1));
+		Assert.assertEquals(avl.getRoot().getLeft().getParent(), avl.getRoot());
+		Assert.assertEquals(avl.getRoot().getRight().getData(), new Integer(3));
+		Assert.assertEquals(avl.getRoot().getRight().getParent(), avl.getRoot());
+		Assert.assertEquals(avl.height(), 1);
+		Assert.assertEquals(avl.size(), 3);
+
+	}
+
+	@Test
+	public void testSimples2(){
+
+		avl.insert(new Integer(1));
+		avl.insert(new Integer(3));
+		avl.insert(new Integer(2));
+		Assert.assertEquals(avl.getRoot().getData(), new Integer(2));
+		Assert.assertEquals(avl.getRoot().getLeft().getData(), new Integer(1));
+		Assert.assertEquals(avl.getRoot().getLeft().getParent(), avl.getRoot());
+		Assert.assertEquals(avl.getRoot().getRight().getData(), new Integer(3));
+		Assert.assertEquals(avl.getRoot().getRight().getParent(), avl.getRoot());
+		Assert.assertEquals(avl.height(), 1);
+		Assert.assertEquals(avl.size(), 3);
+
+	}
+
 }
