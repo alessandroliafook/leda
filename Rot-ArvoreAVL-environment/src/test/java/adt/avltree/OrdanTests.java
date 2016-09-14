@@ -150,7 +150,7 @@ public class OrdanTests {
             tree.insert(i);
             Assert.assertTrue(tree.height() <= maxPossibleHeight(i));
             Assert.assertEquals(i, tree.size());
-            Assert.assertTrue(testParents((BSTNode<Integer>) tree.getRoot(), NIL));
+            Assert.assertNull(tree.getRoot().getParent());
             Assert.assertTrue(testBalance((BSTNode<Integer>) tree.getRoot()));
         }
     }
@@ -177,7 +177,7 @@ public class OrdanTests {
         Assert.assertEquals(new Integer(2), tree.getRoot().getRight().getData());
         Assert.assertEquals(tree.getRoot().getLeft().getParent(), tree.getRoot());
         Assert.assertEquals(tree.getRoot().getRight().getParent(), tree.getRoot());
-        Assert.assertEquals(tree.getRoot().getParent(), NIL);
+        Assert.assertEquals(tree.getRoot().getParent(), null);
     }
 
     @Test
@@ -191,7 +191,7 @@ public class OrdanTests {
         Assert.assertEquals(new Integer(3), tree.getRoot().getRight().getData());
         Assert.assertEquals(tree.getRoot().getLeft().getParent(), tree.getRoot());
         Assert.assertEquals(tree.getRoot().getRight().getParent(), tree.getRoot());
-        Assert.assertEquals(tree.getRoot().getParent(), NIL);
+        Assert.assertEquals(tree.getRoot().getParent(), null);
     }
 
     @Test
