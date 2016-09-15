@@ -65,7 +65,10 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 
 			BTNode<T> node = root;
 
-			while (!node.isEmpty() || !node.getData().equals(element)) {
+			while (!node.isEmpty()) {
+
+				if (node.getData().equals(element))
+					break;
 
 				if (node.getData().compareTo(element) > 0)
 					node = node.getLeft();
