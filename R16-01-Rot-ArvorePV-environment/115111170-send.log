@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<head/><log>
+<record>
+  <date>2016-09-21T16:15:38.992-0300</date>
+  <logger>ALESSANDRO LIA FOOK SANTOS</logger>
+  <level>FINE</level>
+  <message>File 115111170-ALESSANDRO LIA FOOK SANTOS.zip was received. It was sent by ALESSANDRO LIA FOOK SANTOS from IP 150.165.74.139</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-09-21T21:43:56.228-0300</date>
+  <logger>ALESSANDRO LIA FOOK SANTOS</logger>
+  <level>FINE</level>
+  <message>File 115111170-ALESSANDRO LIA FOOK SANTOS.zip was received. It was sent by ALESSANDRO LIA FOOK SANTOS from IP 10.3.2.108</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-09-21T22:02:33.307-0300</date>
+  <logger>ALESSANDRO LIA FOOK SANTOS</logger>
+  <level>FINE</level>
+  <message>File 115111170-ALESSANDRO LIA FOOK SANTOS.zip was received. It was sent by ALESSANDRO LIA FOOK SANTOS from IP 10.3.2.108</message>
+</record>
