@@ -166,6 +166,8 @@ public class StudentTestRBTree2 {
 			int insertedElement = r.nextInt();
 			myRB.insert(insertedElement);
 			assertTrue(myRB.height() <= 2 * Math.log(myRB.size() + 1));
+			if(i >= 2000) assertEquals(myRB.blackHeightRecursive((RBNode<Integer>) myRB.getRoot().getLeft()),
+					myRB.blackHeightRecursive((RBNode<Integer>) myRB.getRoot().getRight()));
 		}
 
 		assertTrue(myRB.verifyProperties());
@@ -346,13 +348,13 @@ public class StudentTestRBTree2 {
 	@Test
 	public void myTestWithAReallyLongAndPointlessNameJustForTheLulzStillFollowingThePatternsAndGoodManners() {
 		Integer[] joaoArray = { 84, 61, 30, 65, 80, 8, 3, 5, 76, 65 };
-		for (Integer anotherVariableWithALongAndPointlessName : joaoArray)
+		for (Integer anotherVariableWithALongAndPointlessName : joaoArray) {
 			myRB.insert(anotherVariableWithALongAndPointlessName);
+		}
 
 		assertEquals(myRB.blackHeight(), 2);
 		assertTrue(myRB.getRoot().getData().equals(61));
 		assertTrue(myRB.verifyProperties());
-		myRB.remove(null);
 	}
 
 	@Test
@@ -518,4 +520,5 @@ public class StudentTestRBTree2 {
 	private RBNode<? extends Comparable<?>> e(BTNode<?> ue) {
 		return (RBNode<? extends Comparable<?>>) ue;
 	}
+
 }
