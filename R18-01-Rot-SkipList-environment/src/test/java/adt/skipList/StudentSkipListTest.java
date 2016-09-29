@@ -45,6 +45,7 @@ public class StudentSkipListTest {
 		assertEquals(0, array[0].getForward(0).getKey());
 		assertEquals(5, array[0].getForward(1).getKey());
 		assertEquals(5, array[0].getForward(2).getKey());
+		//assertNull(array[0].getForward(3));
 		assertEquals(5, array[1].getForward(0).getKey());
 		assertEquals(10, array[2].getForward(0).getKey());
 		assertEquals(10, array[2].getForward(1).getKey());
@@ -439,7 +440,33 @@ public class StudentSkipListTest {
 		assertEquals(1, skip.height());
 	}
 
+	@Test
+	public void testFinal2(){
+		((SkipListImpl<String>) skip).USE_MAX_HEIGHT_AS_HEIGHT = false;
+		assertNull(((SkipListImpl<String>) skip).root.getForward(1));
+		assertNull(((SkipListImpl<String>) skip).root.getForward(2));
+		assertNull(((SkipListImpl<String>) skip).root.getForward(3));
+		assertEquals(((SkipListImpl<String>) skip).root.getForward(0).getKey(), Integer.MAX_VALUE);
+
+		((SkipListImpl<String>) skip).USE_MAX_HEIGHT_AS_HEIGHT = true;
+		skip.insert(1,"a",1);
+		assertEquals(((SkipListImpl<String>) skip).root.getForward(0).getKey(), 1);
+		assertEquals(((SkipListImpl<String>) skip).root.getForward(1).getKey(), Integer.MAX_VALUE);
+		assertEquals(((SkipListImpl<String>) skip).root.getForward(2).getKey(), Integer.MAX_VALUE);
+		assertEquals(((SkipListImpl<String>) skip).root.getForward(3).getKey(), Integer.MAX_VALUE);
+
+		((SkipListImpl<String>) skip).USE_MAX_HEIGHT_AS_HEIGHT = false;
+		skip.remove(1);
+		assertNull(((SkipListImpl<String>) skip).root.getForward(1));
+		assertNull(((SkipListImpl<String>) skip).root.getForward(2));
+		assertNull(((SkipListImpl<String>) skip).root.getForward(3));
+		assertEquals(((SkipListImpl<String>) skip).root.getForward(0).getKey(), Integer.MAX_VALUE);
+	}
+
 	private void change(SkipList<String> bugTree) {
 		((SkipListImpl<String>) bugTree).USE_MAX_HEIGHT_AS_HEIGHT = !((SkipListImpl<String>) bugTree).USE_MAX_HEIGHT_AS_HEIGHT;
 	}
+
+
+
 }

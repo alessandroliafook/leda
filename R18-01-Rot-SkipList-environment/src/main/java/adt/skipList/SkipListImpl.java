@@ -32,10 +32,15 @@ public class SkipListImpl<T> implements SkipList<T> {
     * metodo deve conectar apenas o forward[0].
     */
    private void connectRootToNil() {
+      if (maxHeight > 0)
+         getRoot().getForward()[0] = getNIL();
+   }
 
-	   for (int i = 0; i < getMaxHeight(); i++) {
-		   getRoot().getForward()[i] = getNIL();
-	   }
+   public void fixUp(){
+      for (int i = 0; i < getMaxHeight(); i++) {
+         if (getRoot().getForward()[i] == null)
+            getRoot().getForward()[i] = getNIL();
+      }
    }
 
    /**
@@ -61,6 +66,8 @@ public class SkipListImpl<T> implements SkipList<T> {
       if (newValue == null || height > getMaxHeight() || height < 0) {
          return;
       }
+
+      fixUp();
 
       SkipListNode<T>[] update = new SkipListNode[getMaxHeight()];
       SkipListNode<T> node = getRoot();
@@ -96,10 +103,13 @@ public class SkipListImpl<T> implements SkipList<T> {
             update[i].getForward()[i] = newNode;
          }
       }
+      fixHeight();
    }
 
    @Override
    public void remove(int key) {
+
+      fixUp();
 
       SkipListNode<T>[] update = new SkipListNode[getMaxHeight()];
       SkipListNode<T> node = getRoot();
