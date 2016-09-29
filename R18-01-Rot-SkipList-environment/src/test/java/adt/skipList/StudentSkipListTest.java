@@ -9,10 +9,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import adt.skipList.SkipList;
-import adt.skipList.SkipListImpl;
-import adt.skipList.SkipListNode;
-
 public class StudentSkipListTest {
 
 	SkipList<String> skip;
@@ -59,6 +55,7 @@ public class StudentSkipListTest {
 		assertEquals(Integer.MAX_VALUE, array[4].getForward(1).getKey());
 		assertEquals(Integer.MAX_VALUE, array[4].getForward(2).getKey());
 		assertEquals(Integer.MAX_VALUE, array[5].getForward(0).getKey());
+
 
 		List<String> aux = new ArrayList<>();
 		for (int i = 1; i < array.length - 1; ++i)
@@ -184,5 +181,265 @@ public class StudentSkipListTest {
 			assertEquals("[<ROOT,4,1>, <NIL,4>]", Arrays.toString(array));
 		}
 		assertEquals(Integer.MAX_VALUE, array[0].getForward(0).getKey());
+	}
+
+	@Test
+	public void dinizTest1() {
+
+		assertEquals(0, skip.size());
+		skip.insert(3, "B", 3);
+		assertEquals(1, skip.size());
+		skip.insert(1, "A", 2);
+		assertEquals(2, skip.size());
+		skip.insert(4, "C", 1);
+		assertEquals(3, skip.size());
+
+		((SkipListImpl<String>) skip).USE_MAX_HEIGHT_AS_HEIGHT = true;
+		array = skip.toArray();
+		assertEquals("[<ROOT,4,4>, <1,2>, <3,3>, <4,1>, <NIL,4>]", Arrays.toString(array));
+
+		List<String> aux = new ArrayList<>();
+		for(SkipListNode<String> node : array){
+			aux.add(node.getValue());
+		}
+
+		assertEquals("[null, A, B, C, null]", aux.toString());
+		assertEquals(4,skip.height());
+
+
+		((SkipListImpl<String>) skip).USE_MAX_HEIGHT_AS_HEIGHT = false;
+		array = skip.toArray();
+		assertEquals("[<ROOT,4,3>, <1,2>, <3,3>, <4,1>, <NIL,4>]", Arrays.toString(array));
+
+		aux.clear();
+		for(SkipListNode<String> node : array){
+			aux.add(node.getValue());
+		}
+
+		assertEquals("[null, A, B, C, null]", aux.toString());
+		assertEquals(3,skip.height());
+
+
+		skip.insert(5, "D", 2);
+		assertEquals(4, skip.size());
+
+		((SkipListImpl<String>) skip).USE_MAX_HEIGHT_AS_HEIGHT = true;
+		array = skip.toArray();
+		assertEquals("[<ROOT,4,4>, <1,2>, <3,3>, <4,1>, <5,2>, <NIL,4>]", Arrays.toString(array));
+
+		aux.clear();
+		for(SkipListNode<String> node : array){
+			aux.add(node.getValue());
+		}
+
+		assertEquals("[null, A, B, C, D, null]", aux.toString());
+		assertEquals(4,skip.height());
+
+
+		((SkipListImpl<String>) skip).USE_MAX_HEIGHT_AS_HEIGHT = false;
+		array = skip.toArray();
+		assertEquals("[<ROOT,4,3>, <1,2>, <3,3>, <4,1>, <5,2>, <NIL,4>]", Arrays.toString(array));
+
+		aux.clear();
+		for(SkipListNode<String> node : array){
+			aux.add(node.getValue());
+		}
+
+		assertEquals("[null, A, B, C, D, null]", aux.toString());
+		assertEquals(3,skip.height());
+
+		skip.remove(4);
+		assertEquals(3, skip.size());
+
+		((SkipListImpl<String>) skip).USE_MAX_HEIGHT_AS_HEIGHT = true;
+		array = skip.toArray();
+		assertEquals("[<ROOT,4,4>, <1,2>, <3,3>, <5,2>, <NIL,4>]", Arrays.toString(array));
+
+		aux.clear();
+		for(SkipListNode<String> node : array){
+			aux.add(node.getValue());
+		}
+
+		assertEquals("[null, A, B, D, null]", aux.toString());
+		assertEquals(4,skip.height());
+
+
+		((SkipListImpl<String>) skip).USE_MAX_HEIGHT_AS_HEIGHT = false;
+		array = skip.toArray();
+		assertEquals("[<ROOT,4,3>, <1,2>, <3,3>, <5,2>, <NIL,4>]", Arrays.toString(array));
+
+		aux.clear();
+		for(SkipListNode<String> node : array){
+			aux.add(node.getValue());
+		}
+
+		assertEquals("[null, A, B, D, null]", aux.toString());
+		assertEquals(3,skip.height());
+
+
+		skip.remove(1);
+		skip.remove(5);
+		assertEquals(1,skip.size());
+
+		((SkipListImpl<String>) skip).USE_MAX_HEIGHT_AS_HEIGHT = true;
+		array = skip.toArray();
+		assertEquals("[<ROOT,4,4>, <3,3>, <NIL,4>]", Arrays.toString(array));
+
+		aux.clear();
+		for(SkipListNode<String> node : array){
+			aux.add(node.getValue());
+		}
+
+		assertEquals("[null, B, null]", aux.toString());
+		assertEquals(4,skip.height());
+		assertEquals(1,skip.size());
+
+
+		((SkipListImpl<String>) skip).USE_MAX_HEIGHT_AS_HEIGHT = false;
+		array = skip.toArray();
+		assertEquals("[<ROOT,4,3>, <3,3>, <NIL,4>]", Arrays.toString(array));
+
+		aux.clear();
+		for(SkipListNode<String> node : array){
+			aux.add(node.getValue());
+		}
+
+		assertEquals("[null, B, null]", aux.toString());
+		assertEquals(3,skip.height());
+		assertEquals(1,skip.size());
+
+
+
+
+		skip.remove(3);
+
+		assertEquals(0,skip.size());
+
+		((SkipListImpl<String>) skip).USE_MAX_HEIGHT_AS_HEIGHT = true;
+		array = skip.toArray();
+		assertEquals("[<ROOT,4,4>, <NIL,4>]", Arrays.toString(array));
+
+		aux.clear();
+		for(SkipListNode<String> node : array){
+			aux.add(node.getValue());
+		}
+
+		assertEquals("[null, null]", aux.toString());
+		assertEquals(4,skip.height());
+		assertEquals(0,skip.size());
+
+
+		((SkipListImpl<String>) skip).USE_MAX_HEIGHT_AS_HEIGHT = false;
+		array = skip.toArray();
+		assertEquals("[<ROOT,4,1>, <NIL,4>]", Arrays.toString(array));
+
+		aux.clear();
+		for(SkipListNode<String> node : array){
+			aux.add(node.getValue());
+		}
+
+		assertEquals("[null, null]", aux.toString());
+		assertEquals(1,skip.height());
+		assertEquals(0,skip.size());
+
+
+	}
+
+	@Test
+	public void insertComSuperposicao() {
+
+		SkipList<String> bugTree = new SkipListImpl<String>(5);
+
+		//max altura interna = 4
+		bugTree.insert(5, "A", 1);
+		bugTree.insert(2, "C", 3);
+		bugTree.insert(6, "D", 2);
+		bugTree.insert(4, "R", 4);
+		bugTree.insert(8, "AAsS", 1);
+		bugTree.insert(9, "12", 2);
+
+
+		if(((SkipListImpl<String>) bugTree).USE_MAX_HEIGHT_AS_HEIGHT) {
+			assertEquals(5, bugTree.height());
+			change(bugTree);
+			assertEquals(4, bugTree.height());
+
+		} else {
+			assertEquals(4, bugTree.height());
+			change(bugTree);
+			assertEquals(5, bugTree.height());
+		}
+	}
+
+	@Test
+	public void brainFuck() {
+
+		SkipList<String> bugTree = new SkipListImpl<String>(0);
+
+
+		if(((SkipListImpl<String>) bugTree).USE_MAX_HEIGHT_AS_HEIGHT) {
+			assertEquals(0, bugTree.height());
+			change(bugTree);
+			assertEquals(1, bugTree.height());
+
+		} else {
+			assertEquals(1, bugTree.height());
+			change(bugTree);
+			assertEquals(0, bugTree.height());
+
+		}
+
+	}
+
+	@Test
+	public void testInsertRandom(){
+
+		((SkipListImpl<String>) skip).USE_MAX_HEIGHT_AS_HEIGHT = false;
+
+		((SkipListImpl<String>)skip).insert(1,"a");
+		((SkipListImpl<String>)skip).insert(2,"b");
+		((SkipListImpl<String>)skip).insert(3,"c");
+
+		assertTrue(skip.height() <= ((SkipListImpl<String>) skip).maxHeight);
+		assertEquals(3, skip.size());
+
+	}
+
+	@Test
+	public void testInsertRandom2(){
+
+		((SkipListImpl<String>) skip).USE_MAX_HEIGHT_AS_HEIGHT = false;
+
+		for(int i = 0 ; i < 27 ; i++){
+			((SkipListImpl<String>)skip).insert(i,"a" + i);
+
+			assertTrue(skip.height() <= ((SkipListImpl<String>) skip).maxHeight);
+			assertEquals(i + 1, skip.size());
+		}
+
+	}
+
+	@Test
+	public void finalTest(){
+		((SkipListImpl<String>) skip).USE_MAX_HEIGHT_AS_HEIGHT = false;
+
+		assertEquals(1, skip.height());
+		skip.insert(1,"a",1);
+		assertEquals(1, skip.height());
+		skip.insert(2,"a",2);
+		assertEquals(2, skip.height());
+		skip.insert(3,"a",3);
+		assertEquals(3, skip.height());
+
+		skip.remove(3);
+		assertEquals(2, skip.height());
+		skip.remove(2);
+		assertEquals(1, skip.height());
+		skip.remove(1);
+		assertEquals(1, skip.height());
+	}
+
+	private void change(SkipList<String> bugTree) {
+		((SkipListImpl<String>) bugTree).USE_MAX_HEIGHT_AS_HEIGHT = !((SkipListImpl<String>) bugTree).USE_MAX_HEIGHT_AS_HEIGHT;
 	}
 }

@@ -7,3 +7,33 @@
   <level>FINE</level>
   <message>File 115111170-ALESSANDRO LIA FOOK SANTOS.zip was received. It was sent by ALESSANDRO LIA FOOK SANTOS from IP 127.0.1.1</message>
 </record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-09-29T03:21:04.652-0300</date>
+  <logger>ALESSANDRO LIA FOOK SANTOS</logger>
+  <level>FINE</level>
+  <message>File 115111170-ALESSANDRO LIA FOOK SANTOS.zip was received. It was sent by ALESSANDRO LIA FOOK SANTOS from IP 10.3.2.106</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-09-29T04:11:35.692-0300</date>
+  <logger>ALESSANDRO LIA FOOK SANTOS</logger>
+  <level>FINE</level>
+  <message>File 115111170-ALESSANDRO LIA FOOK SANTOS.zip was received. It was sent by ALESSANDRO LIA FOOK SANTOS from IP 10.3.2.106</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-09-29T04:15:21.409-0300</date>
+  <logger>ALESSANDRO LIA FOOK SANTOS</logger>
+  <level>FINE</level>
+  <message>File 115111170-ALESSANDRO LIA FOOK SANTOS.zip was received. It was sent by ALESSANDRO LIA FOOK SANTOS from IP 10.3.2.106</message>
+</record>
