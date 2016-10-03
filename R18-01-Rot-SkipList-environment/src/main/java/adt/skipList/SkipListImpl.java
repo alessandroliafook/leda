@@ -74,8 +74,10 @@ public class SkipListImpl<T> implements SkipList<T> {
 
       for (int i = getHeight() - 1; i >= 0; i--) {
 
-         while (node != null && node.getForward(i) != null && (!node.equals(getNIL())) && node.getForward(i).getKey() <
-		         key) {
+         while (node != null && node.getForward(i) != null &&
+                 (!node.equals(getNIL())) &&
+                 node.getForward(i).getKey() < key) {
+
             node = node.getForward(i);
          }
          update[i] = node;
