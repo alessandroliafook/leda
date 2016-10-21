@@ -1,2 +1,2 @@
-# leda
-Trabalhos em java para a disciplina de Laboratório de Estrutura de Dados
+# Data Structure
+Activities submitted in the course of data structure.
